@@ -1,6 +1,6 @@
-import { HeroSection } from "./sections/Hero";
-import { TextBlockSection } from "./sections/TextBlock";
+import { SanityHeroSection } from "./sections/Hero";
+import { SanityTextBlockSection } from "./sections/TextBlock";
 
 export type SanitySection = 
-    | HeroSection
-    | TextBlockSection
+    | SanityHeroSection
+    | SanityTextBlockSection

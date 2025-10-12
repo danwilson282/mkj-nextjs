@@ -1,19 +1,19 @@
 import { loadQuery } from "../lib/loadQuery";
 import { pagePreQuery, pagesQuery } from "../queries/page";
-import { Page } from "../types/Page";
+import { SanityPage } from "../types/Page";
 import { getSections } from "../helpers/getSectionsQuery";
 import { groq } from "next-sanity";
 
-export const getPages = async (isDraft: boolean): Promise<Page[] | null> => {
-    const data = await loadQuery<Record<string, unknown>, Page[]>(pagesQuery, isDraft, {})
+export const getPages = async (isDraft: boolean): Promise<SanityPage[] | null> => {
+    const data = await loadQuery<Record<string, unknown>, SanityPage[]>(pagesQuery, isDraft, {})
     return data
 }
 
 export const getPage = async (
   isDraft: boolean,
   params: Record<string, unknown>
-): Promise<Page | null> => {
-  const preFetch = await loadQuery<typeof params, Page>(pagePreQuery, isDraft, params);
+): Promise<SanityPage | null> => {
+  const preFetch = await loadQuery<typeof params, SanityPage>(pagePreQuery, isDraft, params);
   // pre query to get types of included sections
   const includedSections = preFetch.sections.map(section=> section._type)
   // get included section fragments
@@ -25,7 +25,7 @@ export const getPage = async (
     }
   }
   `
-  const page = await loadQuery<typeof params, Page>(pageQuery, isDraft, params);
+  const page = await loadQuery<typeof params, SanityPage>(pageQuery, isDraft, params);
   // full query
   return page
 };

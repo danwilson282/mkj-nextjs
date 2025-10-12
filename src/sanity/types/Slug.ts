@@ -1,4 +1,4 @@
-export type Slug = {
+export type SanitySlug = {
     type: string;
     current: string;
 }

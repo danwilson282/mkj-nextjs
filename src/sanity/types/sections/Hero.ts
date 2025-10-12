@@ -1,4 +1,4 @@
 import { SanityDocument } from 'next-sanity';
-export type HeroSection = SanityDocument & {
+export type SanityHeroSection = SanityDocument & {
     
 }
