@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import TopNav from "@/components/TopNav";
 import Footer from "@/components/Footer";
 import { getHeader } from "@/sanity/fetch/getHeader";
+import { getFooter } from "@/sanity/fetch/getFooter";
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -13,13 +14,14 @@ export default async function RootLayout({
 }>) {
   const isDraft = (await draftMode()).isEnabled
   const header = await getHeader(isDraft) || {}
+  const footer = await getFooter(isDraft) || {}
   return (
     <html lang="en">
       <body className="flex flex-col min-h-screen">
         <Header header={header} />
         <TopNav />
         <main className="flex-grow">{children}</main>
-        <Footer />
+        <Footer footer={footer} />
         {isDraft && (
           <>
             <VisualEditing />
