@@ -1,19 +1,11 @@
 import { PortableText } from "next-sanity";
-import imageUrlBuilder from "@sanity/image-url";
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
-import { client } from "@/sanity/lib/client";
+
 import Link from "next/link";
 import { getPost } from "@/sanity/fetch/getPosts";
+import { getPage } from "@/sanity/fetch/getPages";
 import { notFound } from 'next/navigation';
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/sanityImage";
-const { projectId, dataset } = client.config();
-// const urlFor = (source: SanityImageSource) =>
-//   projectId && dataset
-//     ? imageUrlBuilder({ projectId, dataset }).image(source)
-//     : null;
-
-
 
 export default async function PostPage({
   params,
@@ -21,10 +13,14 @@ export default async function PostPage({
   params: Promise<{ slug: string }>;
 }) {
   const post = await getPost(false, await params)
+  const page = await getPage(false, await params)
+  if (page){
+    return <pre>{JSON.stringify(page,null,2)}</pre>
+  }
   if (!post){
     notFound();
   }
-  console.log(post)
+  
   const postImageUrl = post.image
     ? urlFor(post.image)?.width(550).height(310).url()
     : null;
