@@ -2,12 +2,16 @@
 import { FC } from "react"
 import Image from "next/image"
 import { SanityHeader } from "@/sanity/types/globals/Header"
+import { cn } from "@/sanity/helpers/className"
 interface HeaderProps {
   header: SanityHeader
 }
 const Header: FC<HeaderProps> = ({ header }) => {
   return (
-    <header className="bg-blue-600 flex flex-row items-left">
+    <header style={{backgroundColor: header.backgroundColour?.hex ?? ""}} className={cn(
+      "flex flex-row items-left",
+      !header.backgroundColour?.hex && "bg-blue-600"
+      )}>
         <div className=" flex flex-row items-left h-16">
             <Image
                 src={header.logo ?? ""}
