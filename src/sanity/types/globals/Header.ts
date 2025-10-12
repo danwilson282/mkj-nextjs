@@ -3,5 +3,5 @@ import type { Image } from 'sanity';
 export type SanityHeader = {
     siteTitle?: string;
     backgroundColour?: SanityColour;
-    logo?: Image;
+    logo?: string;
 }

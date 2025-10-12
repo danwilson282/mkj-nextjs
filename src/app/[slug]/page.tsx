@@ -3,6 +3,7 @@ import { PortableText } from "next-sanity";
 import Link from "next/link";
 import { getPost } from "@/sanity/fetch/getPosts";
 import { getPage } from "@/sanity/fetch/getPages";
+import { getHeader } from "@/sanity/fetch/getHeader";
 import { notFound } from 'next/navigation';
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/sanityImage";
@@ -13,7 +14,7 @@ export default async function PostPage({
   params: Promise<{ slug: string }>;
 }) {
   const post = await getPost(false, await params)
-  const page = await getPage(false, await params)
+  const page = await getHeader(false)
   if (page){
     return <pre>{JSON.stringify(page,null,2)}</pre>
   }
