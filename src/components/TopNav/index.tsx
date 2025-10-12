@@ -1,12 +1,54 @@
 // components/TopNav.tsx
 
-'use client'
-
-import { useState } from 'react'
+import React, { FC, ReactNode } from "react"
+// import { useState } from 'react'
 import Link from 'next/link'
+import { SanityTopNav } from '@/sanity/types/globals/TopNav'
+import { getRelativeUrlFromId, getIdFromRelativeUrl } from "@/sanity/helpers/getRelativeUrl"
+interface TopNavProps {
+  topNav: SanityTopNav
+}
+const TopNav: FC<TopNavProps> = async ({ topNav }) => {
+  // const [isOpen, setIsOpen] = useState(false)
+  const navItems = await Promise.all(
+    topNav.navLinks?.map(async (link) => {
+      const id = link.internalLink?._id;
+      let url: ReactNode;
 
-export default function TopNav() {
-  const [isOpen, setIsOpen] = useState(false)
+      switch (link.linkType) {
+        case "external":
+          url = link.externalUrl ?? "/";
+          url = (
+            <a href={link.externalUrl ?? "/"} target="_blank" rel="noopener noreferrer">
+              {link.label}
+            </a>
+          )
+          break;
+
+        case "internal":
+          const relativeUrl = id ? await getRelativeUrlFromId(id) : "/";
+          url = (
+            <Link href={relativeUrl ?? "/"} className="text-white hover:text-gray-300">
+                {link.label}
+            </Link>
+            )
+          break;
+
+        default:
+          url = (
+            <Link href={"/"} className="text-white hover:text-gray-300">
+                {link.label}
+            </Link>
+            )
+          break;
+      }
+
+      return {
+        text: link.label,
+        url: url
+      };
+    }) ?? [] // handle undefined navLinks
+  );
 
   return (
     <nav className="bg-gray-800 text-white">
@@ -14,15 +56,13 @@ export default function TopNav() {
         <div className="flex items-center justify-between h-16">
           {/* Left section */}
           <div className="flex items-center space-x-4">
-            <Link href="/" className="text-white hover:text-gray-300">
-              Home
-            </Link>
-            <Link href="/about" className="text-white hover:text-gray-300 hidden md:inline">
-              About
-            </Link>
-            <Link href="/contact" className="text-white hover:text-gray-300 hidden md:inline">
-              Contact
-            </Link>
+            {
+              navItems?.map((nav, key)=> (
+                <div key={key}>
+                  {nav.url}
+                </div>
+            )
+            )}
           </div>
 
           {/* Right section */}
@@ -32,7 +72,7 @@ export default function TopNav() {
             </button>
 
             {/* Hamburger menu */}
-            <button
+            {/* <button
               onClick={() => setIsOpen(!isOpen)}
               className="md:hidden focus:outline-none"
             >
@@ -53,12 +93,12 @@ export default function TopNav() {
                   }
                 />
               </svg>
-            </button>
+            </button> */}
           </div>
         </div>
 
         {/* Mobile menu */}
-        {isOpen && (
+        {/* {isOpen && (
           <div className="md:hidden mt-2 space-y-2">
             <Link href="/" className="block px-3 py-2 hover:bg-gray-700 rounded">
               Home
@@ -70,8 +110,10 @@ export default function TopNav() {
               Contact
             </Link>
           </div>
-        )}
+        )} */}
       </div>
     </nav>
   )
 }
+
+export default TopNav

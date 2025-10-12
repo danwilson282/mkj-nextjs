@@ -14,7 +14,8 @@ export default async function PostPage({
   params: Promise<{ slug: string }>;
 }) {
   const post = await getPost(false, await params)
-  const page = await getPage(false, {slug: "nested"})
+  const page = await getTopNav(false)
+  // const page = await getPage(false, {slug: "nested"})
   if (page){
     return <pre>{JSON.stringify(page,null,2)}</pre>
   }
