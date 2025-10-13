@@ -7,4 +7,5 @@ export type SanityPost = SanityDocument & {
     slug: SanitySlug;
     body: PortableTextBlock[];
     image: Image;
+    publishedAt: string
 }

@@ -5,7 +5,13 @@ type SlugPart = {
   parent?: string;
   slug: string;
   _id?: string;
+  _type?: "page" | "post";
 };
+
+type ReturnId = {
+  _id: string | null;
+  _type?: "page" | "post";
+}
 
 export const getRelativeUrlFromId = async (id: string): Promise<string> => {
   const query = groq`
@@ -30,7 +36,7 @@ export const getRelativeUrlFromId = async (id: string): Promise<string> => {
   return `${parentPath}/${result.slug}`.replace(/\/+/g, '/');
 };
 
-export const getIdFromRelativeUrl = async (url: string): Promise<string | null> => {
+export const getIdFromRelativeUrl = async (url: string): Promise<ReturnId | null> => {
   // Normalize and split URL path
   const segments = url.replace(/^\/+|\/+$/g, '').split('/');
 
@@ -45,6 +51,7 @@ export const getIdFromRelativeUrl = async (url: string): Promise<string | null> 
         ${parentId ? 'parent._ref == $parentId' : '!defined(parent)'}
       ][0] {
         _id,
+        _type,
         "slug": slug.current,
         "parent": parent._ref
       }
@@ -62,5 +69,8 @@ export const getIdFromRelativeUrl = async (url: string): Promise<string | null> 
     parentId = result._id; // Set parent for next iteration
   }
 
-  return currentPage?._id ?? null;
+  return {
+    _id: currentPage?._id ?? null,
+    _type: currentPage?._type,
+  }
 };
