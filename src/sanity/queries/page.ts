@@ -14,7 +14,7 @@ export const pagesQuery = groq`*[
 }`
 
 export const pageQuery = (includedSections: string[])=> groq`
-  *[_type == "page" && slug.current == $slug][0]{
+  *[_type == "page" && _id==$id][0]{
     title,
     sections[]{
       ${getSections(includedSections)}
@@ -33,7 +33,7 @@ export const pageQuery = (includedSections: string[])=> groq`
 
 export const pagePreQuery = groq`*[
   _type == "page"
-  && slug.current == $slug
+  && _id==$id
 ][0]
 {
   ${pageMiniFragment}

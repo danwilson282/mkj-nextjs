@@ -20,10 +20,16 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className="flex flex-col min-h-screen">
+        <div>
         <Header header={header} />
         <TopNav topNav={topNav}/>
-        <main className="flex-grow">{children}</main>
-        <Footer footer={footer} />
+        </div>
+
+        <main className="flex-1 overflow-auto h-full">{children}</main>
+        <div>
+          <Footer footer={footer} />
+        </div>
+
         {isDraft && (
           <>
             <VisualEditing />

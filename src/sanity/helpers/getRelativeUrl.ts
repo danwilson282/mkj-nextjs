@@ -6,12 +6,8 @@ type SlugPart = {
   slug: string;
   _id?: string;
   _type?: "page" | "post";
+  requiresLogin?: boolean;
 };
-
-type ReturnId = {
-  _id: string | null;
-  _type?: "page" | "post";
-}
 
 export const getRelativeUrlFromId = async (id: string): Promise<string> => {
   const query = groq`
@@ -36,7 +32,7 @@ export const getRelativeUrlFromId = async (id: string): Promise<string> => {
   return `${parentPath}/${result.slug}`.replace(/\/+/g, '/');
 };
 
-export const getIdFromRelativeUrl = async (url: string): Promise<ReturnId | null> => {
+export const getIdFromRelativeUrl = async (url: string): Promise<Partial<SlugPart> | null> => {
   // Normalize and split URL path
   const segments = url.replace(/^\/+|\/+$/g, '').split('/');
 
@@ -52,6 +48,7 @@ export const getIdFromRelativeUrl = async (url: string): Promise<ReturnId | null
       ][0] {
         _id,
         _type,
+        requiresLogin,
         "slug": slug.current,
         "parent": parent._ref
       }
@@ -70,7 +67,8 @@ export const getIdFromRelativeUrl = async (url: string): Promise<ReturnId | null
   }
 
   return {
-    _id: currentPage?._id ?? null,
+    _id: currentPage?._id,
     _type: currentPage?._type,
+    requiresLogin: currentPage?.requiresLogin
   }
 };
