@@ -1,5 +1,6 @@
 import { groq } from 'next-sanity';
 import { loadQuery } from '../lib/loadQuery';
+import { SanityPageMeta } from '../types/objects/PageMeta';
 
 type SlugPart = {
   parent?: string;
@@ -7,6 +8,7 @@ type SlugPart = {
   _id?: string;
   _type?: "page" | "post";
   requiresLogin?: boolean;
+  pageMeta?: SanityPageMeta;
 };
 
 export const getRelativeUrlFromId = async (id: string): Promise<string> => {
@@ -32,7 +34,7 @@ export const getRelativeUrlFromId = async (id: string): Promise<string> => {
   return `${parentPath}/${result.slug}`.replace(/\/+/g, '/');
 };
 
-export const getIdFromRelativeUrl = async (url: string): Promise<Partial<SlugPart> | null> => {
+export const getPageDataFromRelativeUrl = async (url: string): Promise<Partial<SlugPart> | null> => {
   // Normalize and split URL path
   const segments = url.replace(/^\/+|\/+$/g, '').split('/');
 
@@ -49,6 +51,7 @@ export const getIdFromRelativeUrl = async (url: string): Promise<Partial<SlugPar
         _id,
         _type,
         requiresLogin,
+        pageMeta,
         "slug": slug.current,
         "parent": parent._ref
       }
@@ -69,6 +72,7 @@ export const getIdFromRelativeUrl = async (url: string): Promise<Partial<SlugPar
   return {
     _id: currentPage?._id,
     _type: currentPage?._type,
-    requiresLogin: currentPage?.requiresLogin
+    requiresLogin: currentPage?.requiresLogin,
+    pageMeta: currentPage?.pageMeta ?? {}
   }
 };

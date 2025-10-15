@@ -61,7 +61,15 @@ const colour = {
             <Style styleProps={layout}>
                 <div>{title}</div>
                 <div>{JSON.stringify(sections,null,2)}</div>
+                {/* breadcrumbs and title */}
             </Style>
+        </div>
+        <div>
+            {sections.map((section,key)=> (
+                <Style key={key}>
+                    <div>{section._type}</div>
+                </Style>
+            ))}
         </div>
     </div>
   );

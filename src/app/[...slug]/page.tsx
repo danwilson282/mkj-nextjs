@@ -1,8 +1,36 @@
 import { draftMode } from "next/headers";
 import { notFound } from 'next/navigation';
-import { getIdFromRelativeUrl } from "@/sanity/helpers/getRelativeUrl";
+import { getPageDataFromRelativeUrl } from "@/sanity/helpers/getRelativeUrl";
 import PostServer from "@/pages/post";
 import PageServer from "@/pages/page";
+import { Metadata } from 'next'
+
+export async function generateMetadata({ params }: { params: { slug: string[] } }): Promise<Metadata> {
+  const slugParts = await params;
+  const absoluteUrl = `/${slugParts.slug.join('/')}`;
+  const pageObject = await getPageDataFromRelativeUrl(absoluteUrl)
+
+  return {
+    title: pageObject?.pageMeta?.metaTitle ?? process.env.NEXT_PUBLIC_META_TITLE,
+      description: pageObject?.pageMeta?.metaDescription ?? process.env.NEXT_PUBLIC_META_DESCRIPTION,
+      keywords: pageObject?.pageMeta?.metaKeywords ?? [],
+      alternates: {
+        canonical: pageObject?.pageMeta?.canonicalUrl
+      },
+      openGraph: {
+        title: pageObject?.pageMeta?.openGraphTitle ?? process.env.NEXT_PUBLIC_META_TITLE,
+        description: pageObject?.pageMeta?.openGraphDescription ?? process.env.NEXT_PUBLIC_META_DESCRIPTION,
+      },
+      robots: {
+        index: !pageObject?.pageMeta?.noIndex,
+        follow: !pageObject?.pageMeta?.noFollow
+      }
+    }
+
+
+}
+
+
 export default async function PostPage({
   params,
 }: {
@@ -11,10 +39,8 @@ export default async function PostPage({
   const isDraft = (await draftMode()).isEnabled
   const slugParts = await params;
   const absoluteUrl = `/${slugParts.slug.join('/')}`;
-  const idFromUrl = await getIdFromRelativeUrl(absoluteUrl)
-  // const post = await getPost(false, await params)
-  // const page = await getTopNav(false)
-  // const page = await getPage(false, {slug: "nested"})
+  const idFromUrl = await getPageDataFromRelativeUrl(absoluteUrl)
+
   if (idFromUrl){
     const pageType = idFromUrl._type
     const id = idFromUrl._id
