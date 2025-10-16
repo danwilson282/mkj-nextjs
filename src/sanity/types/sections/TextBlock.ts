@@ -1,4 +1,5 @@
-import { SanityDocument } from 'next-sanity';
-export type SanityTextBlockSection = SanityDocument & {
-    
+export type SanityTextBlockSection = {
+    _type: string;
+    title: string;
+    content: string;
 }

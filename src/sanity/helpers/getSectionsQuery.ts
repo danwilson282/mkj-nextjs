@@ -9,6 +9,24 @@ export const getSections = (sectionTypes: string[]): string => {
           return `_type == "hero" => { ${heroFragment} }`
         case 'textBlock':
           return `_type == "textBlock" => { ${textBlockFragment} }`
+        case 'columnLayout':
+            //prefetch types in each column
+            const preFetch = `
+                  _type,
+                  alignment,
+                  columns[
+                    _type=="column"
+                  ]{
+                    gap,
+                    width,
+                    sections[]{
+                      _type
+                    }
+                  }
+            `
+            //populate
+            //return
+          return `_type=="columnLayout" => { ${preFetch} }`
         default:
           return ''
       }

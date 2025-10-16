@@ -17,7 +17,14 @@ export const pageQuery = (includedSections: string[])=> groq`
   *[_type == "page" && _id==$id][0]{
     title,
     sections[]{
-      ${getSections(includedSections)}
+      ${getSections(includedSections)},
+      _type == "columnLayout" => {
+                                      columns[]{
+                                        sections[]{
+                                          ${getSections(includedSections)},
+                                        }
+                                      }
+                              }
     },
     pageMeta{
       ${pageMetaFragment}
