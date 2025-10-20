@@ -12,7 +12,7 @@ export const postsQuery = groq`*[
 
 export const postQuery = groq`*[
   _type == "post"
-  && slug.current == $slug
+  && _id==$id
 ][0]
 {
   ${postFragment}

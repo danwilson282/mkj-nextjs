@@ -4,7 +4,7 @@ import { getPosts } from "@/sanity/fetch/getPosts";
 
 export default async function IndexPage() {
   const { isEnabled } = await draftMode();
-  const posts = await getPosts(isEnabled)
+  const posts = await getPosts(isEnabled) || []
   return (
     <main className="container mx-auto min-h-screen max-w-3xl p-8">
       <h1 className="text-4xl font-bold mb-8">Posts</h1>

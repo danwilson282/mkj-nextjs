@@ -1,10 +1,11 @@
-import type { Slug } from "./Slug";
+import type { SanitySlug } from "./Slug";
 import { SanityDocument } from 'next-sanity';
 import { PortableTextBlock } from '@portabletext/types';
 import type { Image } from 'sanity';
-export type Post = SanityDocument & {
+export type SanityPost = SanityDocument & {
     title: string;
-    slug: Slug;
+    slug: SanitySlug;
     body: PortableTextBlock[];
     image: Image;
+    publishedAt: string
 }
