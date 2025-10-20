@@ -4,7 +4,7 @@ import React, { FC, ReactNode } from "react"
 // import { useState } from 'react'
 import Link from 'next/link'
 import { SanityTopNav } from '@/sanity/types/globals/TopNav'
-import { getRelativeUrlFromId, getIdFromRelativeUrl } from "@/sanity/helpers/getRelativeUrl"
+import { getRelativeUrlFromId } from "@/sanity/helpers/getRelativeUrl"
 interface TopNavProps {
   topNav: SanityTopNav
 }

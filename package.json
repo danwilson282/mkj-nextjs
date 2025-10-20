@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@danwilson282/mkj-component-library": "^0.1.4",
     "@sanity/client": "^7.12.0",
     "@sanity/image-url": "^1.2.0",
     "@vercel/stega": "^0.1.2",

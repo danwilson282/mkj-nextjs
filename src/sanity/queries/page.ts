@@ -19,7 +19,11 @@ export const pageQuery = (includedSections: string[])=> groq`
     sections[]{
       ${getSections(includedSections)},
       _type == "columnLayout" => {
+                                      _type,
+                                      alignment,
                                       columns[]{
+                                        width,
+                                        gap,
                                         sections[]{
                                           ${getSections(includedSections)},
                                         }

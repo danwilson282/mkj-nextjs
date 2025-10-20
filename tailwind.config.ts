@@ -1,7 +1,10 @@
 /** @type {import('tailwindcss').Config} */
+import { heroui } from "@heroui/react";
 module.exports = {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}", // Ensure your files are scanned
+    './node_modules/@heroui/**/*.{js,ts,jsx,tsx}', // HeroUI added to JIT
+    './node_modules/@danwilson282/**/*.{js,ts,jsx,tsx}'
   ],
   safelist: [
     // Safelist all possible padding classes based on remToTailwind output
@@ -33,5 +36,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [heroui()],
 };
