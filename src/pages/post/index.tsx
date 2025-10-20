@@ -1,8 +1,4 @@
 import { FC } from "react"
-import Image from "next/image"
-import { SanityHeader } from "@/sanity/types/globals/Header"
-import { cn } from "@/sanity/helpers/className"
-import { SanityPost } from "@/sanity/types/Post"
 import { getPost } from "@/sanity/fetch/getPosts"
 import PostClient from "./post"
 import { notFound } from 'next/navigation';
