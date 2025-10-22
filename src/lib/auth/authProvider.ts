@@ -54,7 +54,9 @@ export const authOptions = NextAuth({
         });
 
         if (!user) throw new Error("User not found");
-
+        if (!user.emailVerified) {
+              throw new Error("Please verify your email before logging in.");
+        }
         const isValid = await bcrypt.compare(credentials.password, user.password ?? "");
         if (!isValid) throw new Error("Invalid password");
 
@@ -67,7 +69,11 @@ export const authOptions = NextAuth({
     }),
   ],
   session: { strategy: "jwt" },
-  pages: { signIn: "/login" },
+  pages: { 
+    signIn: "/auth/login",
+    verifyRequest: "/auth/verify-request", // shown after requesting email
+    error: "/auth/error", // handle errors like "email not verified"
+   },
   callbacks: {
     async jwt({ token, user, account }) {
       if (user){

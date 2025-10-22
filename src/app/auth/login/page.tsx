@@ -1,9 +1,15 @@
 "use client";
-
-import { signIn } from "next-auth/react";
-import { useState } from "react";
-
+import { useSearchParams } from "next/navigation";
+import { signIn, signOut } from "next-auth/react";
+import { useState, useEffect } from "react";
 export default function LoginPage() {
+  const searchParams = useSearchParams();
+  const signUserOut = searchParams?.has("signout");
+  useEffect(() => {
+    if (signUserOut) {
+      signOut({ callbackUrl: "/auth/login" });
+    }
+  }, [signUserOut]);
   const [email, setEmail] = useState("");
   const [emailMagic, setEmailMagic] = useState("");
   const [password, setPassword] = useState("");

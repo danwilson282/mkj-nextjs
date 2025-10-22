@@ -1,15 +1,17 @@
 // components/TopNav.tsx
 
 import React, { FC, ReactNode } from "react"
-// import { useState } from 'react'
+import { auth } from "@/lib/auth/auth";
 import Link from 'next/link'
 import { SanityTopNav } from '@/sanity/types/globals/TopNav'
 import { getRelativeUrlFromId } from "@/sanity/helpers/getRelativeUrl"
+import { LoginModal } from "../Login"
+import { Session } from "next-auth";
 interface TopNavProps {
   topNav: SanityTopNav
 }
 const TopNav: FC<TopNavProps> = async ({ topNav }) => {
-  // const [isOpen, setIsOpen] = useState(false)
+  const session = await auth() as Session;
   const navItems = await Promise.all(
     topNav.navLinks?.map(async (link) => {
       const id = link.internalLink?._id;
@@ -68,9 +70,7 @@ const TopNav: FC<TopNavProps> = async ({ topNav }) => {
 
             {/* Right section */}
             <div className="flex items-center space-x-4">
-              <button className="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded text-sm">
-                Login
-              </button>
+              <LoginModal session={session}/>
             </div>
           </div>
         </div>
