@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { getPage } from '@/sanity/fetch/getPages';
 import PageClient from './page';
-import ErrorPage from '../error';
 import { notFound } from 'next/navigation';
 import { getRelativeUrlFromId } from '@/sanity/helpers/getRelativeUrl';
 interface PageServerProps {
