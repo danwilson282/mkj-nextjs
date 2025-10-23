@@ -1,53 +1,60 @@
 // components/TopNav.tsx
 
-import React, { FC, ReactNode } from "react"
-import { auth } from "@/lib/auth/auth";
-import Link from 'next/link'
-import { SanityTopNav } from '@/sanity/types/globals/TopNav'
-import { getRelativeUrlFromId } from "@/sanity/helpers/getRelativeUrl"
-import { LoginModal } from "../Login"
-import { Session } from "next-auth";
+import React, { FC, ReactNode } from 'react';
+import { auth } from '@/lib/auth/auth';
+import Link from 'next/link';
+import { SanityTopNav } from '@/sanity/types/globals/TopNav';
+import { getRelativeUrlFromId } from '@/sanity/helpers/getRelativeUrl';
+import { LoginModal } from '../Login';
+import { Session } from 'next-auth';
 interface TopNavProps {
-  topNav: SanityTopNav
+  topNav: SanityTopNav;
 }
 const TopNav: FC<TopNavProps> = async ({ topNav }) => {
-  const session = await auth() as Session;
+  const session = (await auth()) as Session;
   const navItems = await Promise.all(
     topNav.navLinks?.map(async (link) => {
       const id = link.internalLink?._id;
       let url: ReactNode;
 
       switch (link.linkType) {
-        case "external":
-          url = link.externalUrl ?? "/";
+        case 'external':
+          url = link.externalUrl ?? '/';
           url = (
-            <a href={link.externalUrl ?? "/"} target="_blank" rel="noopener noreferrer">
+            <a
+              href={link.externalUrl ?? '/'}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {link.label}
             </a>
-          )
+          );
           break;
 
-        case "internal":
-          const relativeUrl = id ? await getRelativeUrlFromId(id) : "/";
+        case 'internal':
+          const relativeUrl = id ? await getRelativeUrlFromId(id) : '/';
           url = (
-            <Link href={relativeUrl ?? "/"} className="text-white hover:text-gray-300">
-                {link.label}
+            <Link
+              href={relativeUrl ?? '/'}
+              className="text-white hover:text-gray-300"
+            >
+              {link.label}
             </Link>
-            )
+          );
           break;
 
         default:
           url = (
-            <Link href={"/"} className="text-white hover:text-gray-300">
-                {link.label}
+            <Link href={'/'} className="text-white hover:text-gray-300">
+              {link.label}
             </Link>
-            )
+          );
           break;
       }
 
       return {
         text: link.label,
-        url: url
+        url: url,
       };
     }) ?? [] // handle undefined navLinks
   );
@@ -59,24 +66,20 @@ const TopNav: FC<TopNavProps> = async ({ topNav }) => {
           <div className="flex items-center justify-between h-16">
             {/* Left section */}
             <div className="flex items-center space-x-4">
-              {
-                navItems?.map((nav, key)=> (
-                  <div key={key}>
-                    {nav.url}
-                  </div>
-              )
-              )}
+              {navItems?.map((nav, key) => (
+                <div key={key}>{nav.url}</div>
+              ))}
             </div>
 
             {/* Right section */}
             <div className="flex items-center space-x-4">
-              <LoginModal session={session}/>
+              <LoginModal session={session} />
             </div>
           </div>
         </div>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default TopNav
+export default TopNav;

@@ -1,9 +1,9 @@
-import { FC } from "react"
-import NextImage from "next/image"
+import { FC } from 'react';
+import NextImage from 'next/image';
 import type { Image } from 'sanity';
-import Link from "next/link"
-import { PortableText, PortableTextBlock } from "next-sanity"
-import { urlFor } from "@/sanity/lib/sanityImage";
+import Link from 'next/link';
+import { PortableText, PortableTextBlock } from 'next-sanity';
+import { urlFor } from '@/sanity/lib/sanityImage';
 interface PostClientProps {
   image: Image;
   title: string;
@@ -11,8 +11,13 @@ interface PostClientProps {
   body: PortableTextBlock[];
 }
 
-const PostClient: FC<PostClientProps> = ({ title, body,publishedAt,image }) => {
-      const postImageUrl = image
+const PostClient: FC<PostClientProps> = ({
+  title,
+  body,
+  publishedAt,
+  image,
+}) => {
+  const postImageUrl = image
     ? urlFor(image)?.width(550).height(310).url()
     : null;
   return (
@@ -36,6 +41,6 @@ const PostClient: FC<PostClientProps> = ({ title, body,publishedAt,image }) => {
       </div>
     </main>
   );
-}
+};
 
-export default PostClient
+export default PostClient;

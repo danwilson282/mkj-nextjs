@@ -1,4 +1,4 @@
 export type SanitySlug = {
-    type: string;
-    current: string;
-}
+  type: string;
+  current: string;
+};

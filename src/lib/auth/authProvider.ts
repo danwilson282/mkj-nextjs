@@ -1,12 +1,12 @@
 // src/lib/auth.ts (or src/auth/config.ts — your choice)
-import NextAuth from "next-auth"
-import Credentials from "next-auth/providers/credentials";
-import { prisma } from "@/lib/prisma";
-import bcrypt from "bcrypt";
-import GoogleProvider from "next-auth/providers/google";
-import EmailProvider from "next-auth/providers/email";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import nodemailer from "nodemailer";
+import NextAuth from 'next-auth';
+import Credentials from 'next-auth/providers/credentials';
+import { prisma } from '@/lib/prisma';
+import bcrypt from 'bcrypt';
+import GoogleProvider from 'next-auth/providers/google';
+import EmailProvider from 'next-auth/providers/email';
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import nodemailer from 'nodemailer';
 export const authOptions = NextAuth({
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
@@ -36,29 +36,32 @@ export const authOptions = NextAuth({
       },
     }),
     GoogleProvider({
-        clientId: process.env.GOOGLE_CLIENT_ID!,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      }),
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
     Credentials({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
-        email: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" },
+        email: { label: 'Email', type: 'text' },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password)
-          throw new Error("Missing email or password");
+          throw new Error('Missing email or password');
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         });
 
-        if (!user) throw new Error("User not found");
+        if (!user) throw new Error('User not found');
         if (!user.emailVerified) {
-              throw new Error("Please verify your email before logging in.");
+          throw new Error('Please verify your email before logging in.');
         }
-        const isValid = await bcrypt.compare(credentials.password, user.password ?? "");
-        if (!isValid) throw new Error("Invalid password");
+        const isValid = await bcrypt.compare(
+          credentials.password,
+          user.password ?? ''
+        );
+        if (!isValid) throw new Error('Invalid password');
 
         return {
           id: user.id.toString(),
@@ -68,27 +71,27 @@ export const authOptions = NextAuth({
       },
     }),
   ],
-  session: { strategy: "jwt" },
-  pages: { 
-    signIn: "/auth/login",
-    verifyRequest: "/auth/verify-request", // shown after requesting email
-    error: "/auth/error", // handle errors like "email not verified"
-   },
+  session: { strategy: 'jwt' },
+  pages: {
+    signIn: '/auth/login',
+    verifyRequest: '/auth/verify-request', // shown after requesting email
+    error: '/auth/error', // handle errors like "email not verified"
+  },
   callbacks: {
     async jwt({ token, user, account }) {
-      if (user){
-        token.id = user.id
+      if (user) {
+        token.id = user.id;
       }
-      if (user && account?.provider === "email") {
+      if (user && account?.provider === 'email') {
         token.userId = user.id;
 
         if (!user.name) {
           // Optionally derive a name from the email
-          const defaultName = user.email?.split("@")[0];
+          const defaultName = user.email?.split('@')[0];
 
           await prisma.user.update({
             where: { id: user.id },
-            data: { name: defaultName ?? "Magic Link User" },
+            data: { name: defaultName ?? 'Magic Link User' },
           });
 
           // Optionally reflect in token immediately
@@ -100,10 +103,10 @@ export const authOptions = NextAuth({
       // return token;
     },
     async session({ session, token }) {
-      if (session.user){
-        session.user.id = token.id as string
+      if (session.user) {
+        session.user.id = token.id as string;
       }
-      return session
+      return session;
       // if (token?.user) session.user = token.user as any;
       // return session;
     },

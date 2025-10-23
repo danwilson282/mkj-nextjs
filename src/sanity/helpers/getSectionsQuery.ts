@@ -1,17 +1,17 @@
-import { heroFragment } from "../fragments/sections/hero"
-import { textBlockFragment } from '../fragments/sections/textBlock'
+import { heroFragment } from '../fragments/sections/hero';
+import { textBlockFragment } from '../fragments/sections/textBlock';
 
 export const getSections = (sectionTypes: string[]): string => {
   return sectionTypes
-    .map(type => {
+    .map((type) => {
       switch (type) {
         case 'hero':
-          return `_type == "hero" => { ${heroFragment} }`
+          return `_type == "hero" => { ${heroFragment} }`;
         case 'textBlock':
-          return `_type == "textBlock" => { ${textBlockFragment} }`
+          return `_type == "textBlock" => { ${textBlockFragment} }`;
         case 'columnLayout':
-            //prefetch types in each column
-            const preFetch = `
+          //prefetch types in each column
+          const preFetch = `
                   _type,
                   alignment,
                   columns[
@@ -23,14 +23,14 @@ export const getSections = (sectionTypes: string[]): string => {
                       _type
                     }
                   }
-            `
-            //populate
-            //return
-          return `_type=="columnLayout" => { ${preFetch} }`
+            `;
+          //populate
+          //return
+          return `_type=="columnLayout" => { ${preFetch} }`;
         default:
-          return ''
+          return '';
       }
     })
     .filter(Boolean)
-    .join(',\n')
-}
+    .join(',\n');
+};

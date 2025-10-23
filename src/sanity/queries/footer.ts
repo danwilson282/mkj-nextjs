@@ -1,5 +1,5 @@
-import { groq } from 'next-sanity'
-import { footerFragment } from '../fragments/globals/footerFragment'
+import { groq } from 'next-sanity';
+import { footerFragment } from '../fragments/globals/footerFragment';
 export const footerQuery = groq`*[
   _type == "footer"
   && _id=="footer"
@@ -7,4 +7,4 @@ export const footerQuery = groq`*[
   [0]
 {
   ${footerFragment}
-}`
+}`;

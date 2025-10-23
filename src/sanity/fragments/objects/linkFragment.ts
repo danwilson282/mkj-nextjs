@@ -1,5 +1,5 @@
-import { groq } from 'next-sanity'
-import { pageMiniFragment } from '../pageFragment'
+import { groq } from 'next-sanity';
+import { pageMiniFragment } from '../pageFragment';
 
 export const linkFragment = groq`
         internalLink->{
@@ -9,4 +9,4 @@ export const linkFragment = groq`
         label,
         linkType
 
-`
+`;

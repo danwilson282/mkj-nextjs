@@ -1,5 +1,5 @@
-import { groq } from 'next-sanity'
-import { colourFragment } from '../objects/colourFragment'
+import { groq } from 'next-sanity';
+import { colourFragment } from '../objects/colourFragment';
 
 export const headerFragment = groq`
         _id, 
@@ -8,4 +8,4 @@ export const headerFragment = groq`
         backgroundColour{
         ${colourFragment}
         }
-`
+`;

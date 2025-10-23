@@ -1,14 +1,14 @@
-import type { SanitySlug } from "./Slug";
+import type { SanitySlug } from './Slug';
 import { SanityDocument } from 'next-sanity';
-import { SanitySection } from "./Section";
-import { SanityPageMeta } from "./objects/PageMeta";
-import { SanityLayout } from "./objects/Layout";
+import { SanitySection } from './Section';
+import { SanityPageMeta } from './objects/PageMeta';
+import { SanityLayout } from './objects/Layout';
 export type SanityPage = SanityDocument & {
-    title: string;
-    slug: SanitySlug;
-    sections: SanitySection[];
-    parent?: SanityPage;
-    requiresLogin?: boolean;
-    pageMeta?: SanityPageMeta;
-    layout?: SanityLayout;
-}
+  title: string;
+  slug: SanitySlug;
+  sections: SanitySection[];
+  parent?: SanityPage;
+  requiresLogin?: boolean;
+  pageMeta?: SanityPageMeta;
+  layout?: SanityLayout;
+};

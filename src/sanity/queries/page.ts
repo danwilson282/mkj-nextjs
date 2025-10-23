@@ -1,8 +1,8 @@
-import { groq } from 'next-sanity'
-import { pageMiniFragment } from '../fragments/pageFragment'
-import { getSections } from '../helpers/getSectionsQuery'
-import { pageMetaFragment } from '../fragments/objects/pageMetaFragment'
-import { layoutFragment } from '../fragments/objects/layoutFragment'
+import { groq } from 'next-sanity';
+import { pageMiniFragment } from '../fragments/pageFragment';
+import { getSections } from '../helpers/getSectionsQuery';
+import { pageMetaFragment } from '../fragments/objects/pageMetaFragment';
+import { layoutFragment } from '../fragments/objects/layoutFragment';
 export const pagesQuery = groq`*[
   _type == "page"
   && defined(slug.current)
@@ -11,9 +11,9 @@ export const pagesQuery = groq`*[
   [0...12]
 {
   ${pageMiniFragment}
-}`
+}`;
 
-export const pageQuery = (includedSections: string[])=> groq`
+export const pageQuery = (includedSections: string[]) => groq`
   *[_type == "page" && _id==$id][0]{
     title,
     sections[]{
@@ -40,7 +40,7 @@ export const pageQuery = (includedSections: string[])=> groq`
       ${pageMiniFragment}
     }
   }
-  `
+  `;
 
 export const pagePreQuery = groq`*[
   _type == "page"
@@ -48,4 +48,4 @@ export const pagePreQuery = groq`*[
 ][0]
 {
   ${pageMiniFragment}
-}`
+}`;

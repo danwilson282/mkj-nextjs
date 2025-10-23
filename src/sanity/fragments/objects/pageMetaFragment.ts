@@ -1,4 +1,4 @@
-import { groq } from 'next-sanity'
+import { groq } from 'next-sanity';
 
 export const pageMetaFragment = groq`
         metaTitle,
@@ -8,4 +8,4 @@ export const pageMetaFragment = groq`
         noIndex,
         noFollow
 
-`
+`;

@@ -1,4 +1,4 @@
-import { groq } from 'next-sanity'
+import { groq } from 'next-sanity';
 
 export const columnLayoutFragment = groq`
         alignment,
@@ -7,4 +7,4 @@ export const columnLayoutFragment = groq`
             gap,
             sections[]{_type}
         }
-`
+`;
