@@ -11,6 +11,7 @@ import { getTopNav } from "@/sanity/fetch/getTopNav";
 import { getServerSession, type Session } from "next-auth";
 import { authOptions } from "@/lib/auth/authProvider";
 import AuthProvider from "./context/AuthProvider";
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -24,6 +25,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className="flex flex-col min-h-screen">
+        
         <AuthProvider session={session}>
         <div>
         <Header header={header} />

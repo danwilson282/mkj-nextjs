@@ -3,11 +3,11 @@
 import { Session } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
 import { useState } from "react";
-import { LoginButton } from "./LoginButton";
+import { LoginButton } from "@danwilson282/mkj-component-library";
 export type LoginModalProps = {
     session: Session
 }
-
+import {HeroUIProvider} from '@heroui/react'
 
 export const LoginModal: React.FC<LoginModalProps> = ({session}) => {
   const [email, setEmail] = useState("");
@@ -33,12 +33,15 @@ export const LoginModal: React.FC<LoginModalProps> = ({session}) => {
   }
 
   return (
-  <LoginButton
+<HeroUIProvider>
+    <LoginButton
     user={session?.user}
     registerPage={{label: "No account? Register now", url: "/auth/register"}}
     signOut={{label: "Logout", handleSignOut: signOut}}
     useGoogle={{title: "Google", label: "Sign in with Google", handleGoogleSubmit: handleGoogleSubmit}}
     useCredentials={{title: "Username / password", label: "Sign in with username/password", email: email, setEmail: setEmail, password: password, setPassword: setPassword, handleCredentialsSubmit: handleCredentialsSubmit}}
     useEmail={{title: "Magic link (passwordless)", label: "Sign in with Magic Link", email: emailMagic, setEmail: setEmailMagic, handleEmailSubmit: handleEmailSubmit}}
-  />)
+  />
+  </HeroUIProvider>
+  )
 }
