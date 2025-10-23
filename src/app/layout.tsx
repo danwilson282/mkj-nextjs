@@ -8,6 +8,10 @@ import Footer from "@/components/Footer";
 import { getHeader } from "@/sanity/fetch/getHeader";
 import { getFooter } from "@/sanity/fetch/getFooter";
 import { getTopNav } from "@/sanity/fetch/getTopNav";
+import { getServerSession, type Session } from "next-auth";
+import { authOptions } from "@/lib/auth/authProvider";
+import AuthProvider from "./context/AuthProvider";
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -17,9 +21,12 @@ export default async function RootLayout({
   const header = await getHeader(isDraft) || {}
   const footer = await getFooter(isDraft) || {}
   const topNav = await getTopNav(isDraft) || {}
+  const session = await getServerSession(authOptions) as Session;
   return (
     <html lang="en">
       <body className="flex flex-col min-h-screen">
+        
+        <AuthProvider session={session}>
         <div>
         <Header header={header} />
         <TopNav topNav={topNav}/>
@@ -36,6 +43,7 @@ export default async function RootLayout({
             <DisableDraftMode />
           </>
         )}
+        </AuthProvider>
       </body>
     </html>
   );
