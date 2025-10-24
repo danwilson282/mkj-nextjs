@@ -1,9 +1,9 @@
 // src/components/AuthProvider.tsx
-"use client";
+'use client';
 
-import { SessionProvider } from "next-auth/react";
-import React from "react";
-import { Session } from "next-auth";
+import { SessionProvider } from 'next-auth/react';
+import React from 'react';
+import { Session } from 'next-auth';
 
 interface AuthProviderProps {
   children: React.ReactNode;

@@ -1,5 +1,5 @@
 const RegisterPage = () => {
-    return <>Register</>
-}
+  return <>Register</>;
+};
 
-export default RegisterPage
+export default RegisterPage;

@@ -1,12 +1,12 @@
-import { createClient } from 'next-sanity'
+import { createClient } from 'next-sanity';
 
 export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
   apiVersion: '2023-10-01', // Use a date-based version
-  useCdn: true,             // `false` if you want fresh data
+  useCdn: true, // `false` if you want fresh data
   token: process.env.SANITY_VIEWER_TOKEN,
   stega: {
     studioUrl: process.env.NEXT_PUBLIC_SANITY_STUDIO_URL,
   },
-})
+});

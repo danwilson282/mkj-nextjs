@@ -1,6 +1,6 @@
-import { SanityLink } from "../objects/Link";
+import { SanityLink } from '../objects/Link';
 
 export type SanityTopNav = {
-    title?: string;
-    navLinks?: SanityLink[]
-}
+  title?: string;
+  navLinks?: SanityLink[];
+};

@@ -1,3 +1,3 @@
 export type SanityFooter = {
-    footerText?: string;
-}
+  footerText?: string;
+};

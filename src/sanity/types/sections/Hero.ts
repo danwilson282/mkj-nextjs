@@ -1,5 +1,5 @@
 export type SanityHeroSection = {
-    _type: string;
-    heading: string;
-    tagline: string;
-}
+  _type: string;
+  heading: string;
+  tagline: string;
+};

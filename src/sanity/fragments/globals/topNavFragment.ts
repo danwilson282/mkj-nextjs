@@ -1,6 +1,5 @@
-
-import { groq } from 'next-sanity'
-import { linkFragment } from '../objects/linkFragment'
+import { groq } from 'next-sanity';
+import { linkFragment } from '../objects/linkFragment';
 
 export const topNavFragment = groq`
         _id, 
@@ -8,4 +7,4 @@ export const topNavFragment = groq`
         navLinks[]{
             ${linkFragment}
         },
-`
+`;

@@ -1,4 +1,4 @@
 export type SanityColour = {
-    alpha: number;
-    hex: string;
-}
+  alpha: number;
+  hex: string;
+};

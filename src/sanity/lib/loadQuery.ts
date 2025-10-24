@@ -1,17 +1,17 @@
-import { client } from "./client";
+import { client } from './client';
 export type LoadQueryOptionsType = {
-    next: {
-        revalidate: number;
-    },
-    perspective: "drafts" | "published";
-    useCdn: boolean;
-    stega: boolean;
-}
+  next: {
+    revalidate: number;
+  };
+  perspective: 'drafts' | 'published';
+  useCdn: boolean;
+  stega: boolean;
+};
 
 // Add ResultType generic
 export const loadQuery = async <
   Params extends Record<string, unknown>,
-  ResultType
+  ResultType,
 >(
   query: string,
   isDraft: boolean,
@@ -19,7 +19,7 @@ export const loadQuery = async <
 ): Promise<ResultType> => {
   const options: LoadQueryOptionsType = {
     next: { revalidate: 30 },
-    perspective: isDraft ? "drafts" : "published",
+    perspective: isDraft ? 'drafts' : 'published',
     useCdn: true,
     stega: isDraft,
   };

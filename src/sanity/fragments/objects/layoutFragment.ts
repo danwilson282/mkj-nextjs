@@ -1,5 +1,5 @@
-import { groq } from 'next-sanity'
-import { colourFragment } from './colourFragment'
+import { groq } from 'next-sanity';
+import { colourFragment } from './colourFragment';
 
 export const layoutFragment = groq`
         padding,
@@ -11,4 +11,4 @@ export const layoutFragment = groq`
             },
             opacity
         }
-`
+`;

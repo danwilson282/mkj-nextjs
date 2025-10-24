@@ -1,4 +1,4 @@
-import { groq } from 'next-sanity'
+import { groq } from 'next-sanity';
 
 export const postFragment = groq`
         _id, 
@@ -6,4 +6,4 @@ export const postFragment = groq`
         slug, 
         image,
         publishedAt
-`
+`;

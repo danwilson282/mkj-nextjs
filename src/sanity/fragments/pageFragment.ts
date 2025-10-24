@@ -1,13 +1,13 @@
-import { groq } from 'next-sanity'
-import { pageMetaFragment } from './objects/pageMetaFragment'
-import { columnLayoutFragment } from './sections/columnLayout'
+import { groq } from 'next-sanity';
+import { pageMetaFragment } from './objects/pageMetaFragment';
+import { columnLayoutFragment } from './sections/columnLayout';
 export const pageFragment = groq`
         _id, 
         title, 
         slug, 
         sections,
         pageMeta
-`
+`;
 
 export const pageMiniFragment = groq`
         _id, 
@@ -22,4 +22,4 @@ export const pageMiniFragment = groq`
         pageMeta{
                 ${pageMetaFragment}
         }
-`
+`;

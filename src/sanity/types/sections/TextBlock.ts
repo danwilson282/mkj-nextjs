@@ -1,7 +1,7 @@
-import { TextBlockProps } from "@danwilson282/mkj-component-library";
+import { TextBlockProps } from '@danwilson282/mkj-component-library';
 
 export type SanityTextBlockSection = {
-    _type: string;
-    title: string;
-    content: TextBlockProps["value"];
-}
+  _type: string;
+  title: string;
+  content: TextBlockProps['value'];
+};

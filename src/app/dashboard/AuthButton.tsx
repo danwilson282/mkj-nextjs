@@ -1,13 +1,13 @@
 // src/components/AuthButton.tsx
-"use client";
+'use client';
 
-import { useSession, signIn, signOut } from "next-auth/react";
-import Image from "next/image";
+import { useSession, signIn, signOut } from 'next-auth/react';
+import Image from 'next/image';
 
 export default function AuthButton() {
   const { data: session, status } = useSession();
 
-  if (status === "loading") {
+  if (status === 'loading') {
     return <p>Loading...</p>;
   }
 
@@ -39,7 +39,7 @@ export default function AuthButton() {
 
   return (
     <button
-      onClick={() => signIn("google")}
+      onClick={() => signIn('google')}
       className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
     >
       Sign in with Google

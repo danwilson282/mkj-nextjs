@@ -1,5 +1,5 @@
-import { groq } from 'next-sanity'
-import { postFragment } from '../fragments/postFragment'
+import { groq } from 'next-sanity';
+import { postFragment } from '../fragments/postFragment';
 export const postsQuery = groq`*[
   _type == "post"
   && defined(slug.current)
@@ -8,7 +8,7 @@ export const postsQuery = groq`*[
   [0...12]
 {
   ${postFragment}
-}`
+}`;
 
 export const postQuery = groq`*[
   _type == "post"
@@ -16,4 +16,4 @@ export const postQuery = groq`*[
 ][0]
 {
   ${postFragment}
-}`
+}`;
