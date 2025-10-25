@@ -7,6 +7,7 @@ import { SanityTopNav } from '@/sanity/types/globals/TopNav';
 import { getRelativeUrlFromId } from '@/sanity/helpers/getRelativeUrl';
 import { LoginModal } from '../Login';
 import { Session } from 'next-auth';
+import { SiteNav } from '../SiteNav';
 interface TopNavProps {
   topNav: SanityTopNav;
 }
@@ -62,10 +63,12 @@ const TopNav: FC<TopNavProps> = async ({ topNav }) => {
   return (
     <nav className="bg-gray-800 text-white">
       <div className="container mx-auto w-full">
-        <div className="px-4 sm:px-6 lg:px-8">
+        {/* <div className="px-4 sm:px-6 lg:px-8"> */}
+        <div className="">
           <div className="flex items-center justify-between h-16">
             {/* Left section */}
             <div className="flex items-center space-x-4">
+              <SiteNav/>
               {navItems?.map((nav, key) => (
                 <div key={key}>{nav.url}</div>
               ))}

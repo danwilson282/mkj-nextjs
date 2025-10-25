@@ -7,7 +7,6 @@ import { LoginButton } from '@danwilson282/mkj-component-library';
 export type LoginModalProps = {
   session: Session;
 };
-import { HeroUIProvider } from '@heroui/react';
 
 export const LoginModal: React.FC<LoginModalProps> = ({ session }) => {
   const [email, setEmail] = useState('');
@@ -37,7 +36,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ session }) => {
   };
 
   return (
-    <HeroUIProvider>
+
       <LoginButton
         user={session?.user}
         registerPage={{
@@ -67,6 +66,6 @@ export const LoginModal: React.FC<LoginModalProps> = ({ session }) => {
           handleEmailSubmit: handleEmailSubmit,
         }}
       />
-    </HeroUIProvider>
+
   );
 };
