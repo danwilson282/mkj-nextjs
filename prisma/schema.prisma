@@ -7,6 +7,12 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "../docs/database_schema.md"   // Mermaid format
+  format   = "mermaid"     // or "svg", "png", "plantuml"
+}
+
 model User {
   id                String     @id @default(cuid())
   name              String?

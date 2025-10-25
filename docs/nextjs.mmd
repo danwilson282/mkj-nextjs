@@ -1,0 +1,34 @@
+architecture-beta
+    group next(cloud)[NextJS]
+    group api(cloud)[API] in next
+    group web(cloud)[Website] in next
+
+    service google(server)[Google OAUTH]
+    service email(server)[Email server]
+    service upstash(database)[Upstash REDIS]
+    service sql(database)[Postgres SQL]
+    service component(database)[Component library]
+
+    service auth(server)[NextAuth] in web
+    service frontend(server)[Front end] in web
+    service sanity(database)[Sanity]
+    service rl(server)[Rate limiting middleware] in api
+
+    group routes(server)[Routes] in api
+    service auth_api(server)[Auth] in routes
+    service draft(server)[Enable draft mode] in routes
+    service verify_email(server)[Verify email] in routes
+    service register(server)[Register user] in routes
+
+    junction authJunction
+    junction dbJunction
+
+    rl:B --T:upstash
+    google:R -- L:authJunction
+    email:L -- R:authJunction
+    auth:T -- B:authJunction
+    sanity:R -- L:dbJunction
+    dbJunction:R -- L:sql
+    dbJunction:T -- B:frontend
+    component:B -- T:frontend
+    auth_api:R -- B:auth

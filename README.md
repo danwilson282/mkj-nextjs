@@ -7,6 +7,7 @@
 - ```npm run test``` creates local sqlLite db and seeds using test-seed.ts then runs jest test suite
 - ```npm run studio``` launch prisma studio
 - ```npm run studio:test``` launch prisma studio for test database
+- ```npx prisma generate``` generate mermaid.js autodocs for database schema
 
 # Architecture
 

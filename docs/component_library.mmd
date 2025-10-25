@@ -1,0 +1,21 @@
+architecture-beta
+    group cl(cloud)[Component Library]
+
+    group sb(cloud)[Storybook] in cl
+      service jest(server)[Jest unit testing] in sb
+      service pw(server)[Storybook functional testing] in sb
+      service sg(database)[Storybook component GUI style guide] in sb
+      junction sbJunction in sb
+    service comp(database)[Custom component Library DB] in cl
+    service hero(database)[HeroUI library] in cl
+    service npm(database)[NPM package]
+
+    
+    jest:B -- L:sbJunction
+    pw:B -- T:sbJunction
+    sg:B -- R:sbJunction
+
+    hero:B -- T:comp
+    hero:R -- L:sg
+    comp:R -- R:sg
+    npm:T -- B:comp
