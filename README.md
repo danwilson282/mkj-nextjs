@@ -28,3 +28,8 @@ Jest tests for database logic and backend helper functions contained in this rep
 ## Documentation
 Markdown documents and mermaid.js diagrams
 /docs
+
+## Env
+.env for prisma database
+.env.test for prisma test db
+.env.local for main config
