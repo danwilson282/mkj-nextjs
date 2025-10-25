@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { faker } from '@faker-js/faker';
+// import { faker } from '@faker-js/faker';
 
 const prisma = new PrismaClient();
 
@@ -9,8 +9,8 @@ export async function seedTestDatabase() {
   for (let i = 0; i < 5; i++) {
     await prisma.user.create({
       data: {
-        name: faker.person.fullName(),
-        email: faker.internet.email().toLowerCase(),
+        name: "faker.person.fullName()",
+        email: "faker.internet.email().toLowerCase()",
       },
     });
   }

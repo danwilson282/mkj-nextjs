@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "lint:fix": "eslint . --ext .js,.ts,.jsx,.tsx --fix",
-     "test": "jest"
+     "test": "NODE_ENV=test jest --runInBand",
+     "studio": "npx prisma studio",
+     "studio:test": "DATABASE_URL='file:./test.db' npx prisma studio"
   },
   "type": "module",
   "prisma": {
