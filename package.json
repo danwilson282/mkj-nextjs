@@ -8,9 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "lint:fix": "eslint . --ext .js,.ts,.jsx,.tsx --fix",
-     "test": "NODE_ENV=test jest --runInBand",
-     "studio": "npx prisma studio",
-     "studio:test": "DATABASE_URL='file:./test.db' npx prisma studio"
+    "test": "NODE_ENV=test jest --runInBand",
+    "studio": "npx prisma studio",
+    "studio:test": "DATABASE_URL='file:./test.db' npx prisma studio"
   },
   "type": "module",
   "prisma": {
@@ -23,6 +23,7 @@
     "@prisma/client": "^6.17.1",
     "@sanity/client": "^7.12.0",
     "@sanity/image-url": "^1.2.0",
+    "@upstash/redis": "^1.35.6",
     "@vercel/stega": "^0.1.2",
     "bcrypt": "^6.0.0",
     "clsx": "^2.1.1",
