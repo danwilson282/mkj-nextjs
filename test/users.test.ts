@@ -4,9 +4,7 @@ const prisma = new PrismaClient();
 
 describe('User model (integration)', () => {
   it('should have seeded users', async () => {
-    const users = await prisma.user.findMany({
-        
-    });
+    const users = await prisma.user.findMany({});
     expect(users.length).toBeGreaterThan(0);
   });
 
