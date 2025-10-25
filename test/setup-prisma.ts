@@ -14,8 +14,13 @@ const prisma = new PrismaClient();
 beforeAll(async () => {
   console.log('🧹 Resetting test database...');
   // Reset test database
-  execSync('DATABASE_URL="file:./test.db" npx prisma migrate reset --force', { stdio: 'inherit' });
-
+execSync('npx prisma migrate reset --force', {
+    stdio: 'inherit',
+    env: {
+      ...process.env, // inherit all current env vars
+      DATABASE_URL: process.env.DATABASE_URL, // ensure correct one
+    },
+  });
   // Optional: clear tables after reset (should be empty already)
   // await prisma.user.deleteMany();
 
