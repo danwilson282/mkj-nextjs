@@ -37,6 +37,9 @@ export const getPage = async (
   );
   // pre query to get types of included sections
   //get array of section names from either column structure or normal sections
+  if (!preFetch.sections){
+    return null;
+  }
   const topLevelSections = preFetch.sections.map((section) => section._type);
   const nestedColumnSections = preFetch.sections
     .filter((section) => section._type === 'columnLayout')
