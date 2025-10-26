@@ -14,7 +14,7 @@ import { ColumnSection } from '@/sections/column';
 import { SanityColumnSection } from '@/sanity/types/sections/ColumnSection';
 interface PageClientProps {
   title: string;
-  sections: SanitySection[];
+  sections?: SanitySection[];
   pageMeta?: SanityPageMeta;
   layout?: SanityLayout;
   breadcrumbs?: BreadcrumbProps;
@@ -76,7 +76,7 @@ const PageClient: FC<PageClientProps> = ({
               {title}
             </h2>
             <div>
-              {sections.map((section, key) => (
+              {sections?.map((section, key) => (
                 <Style key={key}>
                   {section._type == 'columnLayout' && (
                     <ColumnSection section={section as SanityColumnSection} />

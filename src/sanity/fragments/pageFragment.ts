@@ -26,7 +26,8 @@ export const pageMiniFragment = groq`
 
 export const pageUrlFragment = groq`
         _id, 
+        title,
         slug,
         requiresLogin,
-        parent->{_id, slug, requiresLogin}
+        parent->{_id, slug}
 `;

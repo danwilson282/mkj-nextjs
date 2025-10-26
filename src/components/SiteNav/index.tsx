@@ -1,11 +1,13 @@
 "use client"
 
-import { NestedNav } from "@danwilson282/mkj-component-library";
+import { NestedNav, NestedNavProps } from "@danwilson282/mkj-component-library";
+import { Session } from "next-auth";
 export type SiteNavProps = {
-  nav?: any;
+  nav: NestedNavProps['navItems'];
+  session: Session;
 };
 
-export const SiteNav: React.FC<SiteNavProps> = ({ nav }) => {
+export const SiteNav: React.FC<SiteNavProps> = ({ nav, session }) => {
     const items = [
     {
       id: '1',
@@ -78,6 +80,6 @@ export const SiteNav: React.FC<SiteNavProps> = ({ nav }) => {
     }
   ]
     return (
-        <NestedNav menuTitle="Menu" navItems={items} />
+        <NestedNav menuTitle="Menu" navItems={nav} />
     )
 }
