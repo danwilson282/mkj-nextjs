@@ -29,5 +29,6 @@ export const pageUrlFragment = groq`
         title,
         slug,
         requiresLogin,
+        hideFromNav,
         parent->{_id, slug}
 `;
