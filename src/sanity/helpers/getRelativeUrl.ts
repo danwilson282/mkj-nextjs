@@ -57,6 +57,7 @@ export const getPageDataFromRelativeUrl = async (
         _id,
         _type,
         requiresLogin,
+        hideFromNav,
         pageMeta,
         "slug": slug.current,
         "parent": parent._ref

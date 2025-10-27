@@ -15,7 +15,6 @@ export async function generateMetadata({
   const slugParts = await params;
   const absoluteUrl = `/${slugParts.slug.join('/')}`;
   const pageObject = await getPageDataFromRelativeUrl(absoluteUrl);
-
   return {
     title:
       pageObject?.pageMeta?.metaTitle ?? process.env.NEXT_PUBLIC_META_TITLE,
@@ -35,8 +34,8 @@ export async function generateMetadata({
         process.env.NEXT_PUBLIC_META_DESCRIPTION,
     },
     robots: {
-      index: !pageObject?.pageMeta?.noIndex,
-      follow: !pageObject?.pageMeta?.noFollow,
+      index: !(pageObject?.pageMeta?.noIndex || pageObject?.requiresLogin),
+      follow: !(pageObject?.pageMeta?.noFollow || pageObject?.requiresLogin),
     },
   };
 }

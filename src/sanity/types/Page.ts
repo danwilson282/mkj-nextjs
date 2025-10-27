@@ -9,6 +9,7 @@ export type SanityPage = SanityDocument & {
   sections?: SanitySection[];
   parent?: SanityPage;
   requiresLogin?: boolean;
+  hideFromNav?: boolean;
   pageMeta?: SanityPageMeta;
   layout?: SanityLayout;
 };

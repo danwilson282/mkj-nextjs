@@ -5,7 +5,7 @@ import { pageMetaFragment } from '../fragments/objects/pageMetaFragment';
 import { layoutFragment } from '../fragments/objects/layoutFragment';
 
 export const pageUrlsQuery = groq`*[
-  _type == "page"
+  _type == "page"  && hideFromNav != true
 ]
 {
   ${pageUrlFragment}
