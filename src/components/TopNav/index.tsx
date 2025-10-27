@@ -8,7 +8,10 @@ import { getRelativeUrlFromId } from '@/sanity/helpers/getRelativeUrl';
 import { LoginModal } from '../Login';
 import { Session } from 'next-auth';
 import { SiteNav } from '../SiteNav';
-import { generateAbsoluteUrls, buildPageTree } from '@/sanity/helpers/generateAbsoluteUrls';
+import {
+  generateAbsoluteUrls,
+  buildPageTree,
+} from '@/sanity/helpers/generateAbsoluteUrls';
 import { draftMode } from 'next/headers';
 interface TopNavProps {
   topNav: SanityTopNav;
@@ -74,7 +77,7 @@ const TopNav: FC<TopNavProps> = async ({ topNav }) => {
           <div className="flex items-center justify-between h-16">
             {/* Left section */}
             <div className="flex items-center space-x-4">
-              <SiteNav nav={menuTree} session={session}/>
+              <SiteNav nav={menuTree} session={session} />
               {navItems?.map((nav, key) => (
                 <div key={key}>{nav.url}</div>
               ))}

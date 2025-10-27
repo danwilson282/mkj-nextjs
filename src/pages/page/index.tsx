@@ -7,10 +7,7 @@ interface PageServerProps {
   id: string;
   isDraft: boolean;
 }
-const PageServer: FC<PageServerProps> = async ({
-  id,
-  isDraft,
-}) => {
+const PageServer: FC<PageServerProps> = async ({ id, isDraft }) => {
   const page = await getPage(isDraft, { id });
   const relativeUrl = await getRelativeUrlFromId(id);
   const breadcrumbsItems = relativeUrl.split('/').map((val) => ({

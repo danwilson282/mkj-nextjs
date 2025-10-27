@@ -2,6 +2,7 @@ import { SanityColumnSection } from '@/sanity/types/sections/ColumnSection';
 import { cn } from '@/sanity/helpers/className';
 import { Section } from '@/sections';
 import { vercelStegaClean } from '@vercel/stega';
+import Style from '@/components/Style';
 type SectionProps = {
   section: SanityColumnSection;
 };
@@ -54,7 +55,6 @@ export const ColumnSection: React.FC<SectionProps> = ({ section }) => {
         return 'gap-0';
     }
   };
-
   return (
     <div className={cn('flex flex-wrap flex-row w-full', alignment())}>
       {section.columns.map((column, key) => (
@@ -63,7 +63,9 @@ export const ColumnSection: React.FC<SectionProps> = ({ section }) => {
           className={cn('flex flex-col', width(column.width), gap(column.gap))}
         >
           {column.sections.map((section, key) => (
-            <Section key={key} section={section} />
+            <Style key={key} nested styleProps={section.layout}>
+              <Section key={key} section={section} />
+            </Style>
           ))}
         </div>
       ))}

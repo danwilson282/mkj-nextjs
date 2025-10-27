@@ -1,85 +1,83 @@
-"use client"
+'use client';
 
-import { NestedNav, NestedNavProps } from "@danwilson282/mkj-component-library";
-import { Session } from "next-auth";
+import { NestedNav, NestedNavProps } from '@danwilson282/mkj-component-library';
+import { Session } from 'next-auth';
 export type SiteNavProps = {
   nav: NestedNavProps['navItems'];
   session: Session;
 };
 
 export const SiteNav: React.FC<SiteNavProps> = ({ nav, session }) => {
-    const items = [
+  const items = [
     {
       id: '1',
       label: 'Home',
-      link: '/'
+      link: '/',
     },
     {
       children: [
         {
           id: '21',
           label: 'Electronics',
-          link: '#electronics'
+          link: '#electronics',
         },
         {
           id: '22',
           label: 'Clothing',
-          link: '#clothing'
+          link: '#clothing',
         },
         {
           children: [
             {
               id: '231',
               label: 'Furniture',
-              link: '#furniture'
+              link: '#furniture',
             },
             {
               id: '232',
               label: 'Decor',
-              link: '#decor'
+              link: '#decor',
             },
             {
               id: '233',
               label: 'Garden Tools',
-              link: '#garden'
-            }
+              link: '#garden',
+            },
           ],
           id: '23',
-          label: 'Home & Garden'
-        }
+          label: 'Home & Garden',
+        },
       ],
       id: '2',
       label: 'Dashboard',
-      link: '/dashboard'
+      link: '/dashboard',
     },
     {
       children: [
         {
           id: '31',
           label: 'Consulting',
-          link: '#consulting'
+          link: '#consulting',
         },
         {
           id: '32',
           label: 'Support',
-          link: '#support'
-        }
+          link: '#support',
+        },
       ],
       id: '3',
-      label: 'Services'
+      label: 'Services',
     },
     {
       id: '4',
       label: 'About',
-      link: '#about'
+      link: '#about',
     },
     {
       id: '5',
       label: 'Contact',
-      link: '#contact'
-    }
-  ]
-    return (
-        <NestedNav menuTitle="Menu" navItems={nav} />
-    )
-}
+      link: '#contact',
+    },
+  ];
+  return <NestedNav menuTitle="Menu" navItems={nav} />;
+};

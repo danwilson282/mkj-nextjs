@@ -27,57 +27,41 @@ const PageClient: FC<PageClientProps> = ({
   layout,
   breadcrumbs,
 }) => {
-  //flex flex-col (for masthead)
-  //masthead div
-  //colour and font
-  //container
-  //default responsive padding
-  //additional padding
-  //flex justify and align
-  //page
-  const style: SanityLayout = {
-    alignment: 'end',
-    backgroundColor: {
-      colour: {
-        alpha: 1,
-        hex: '#7be311',
-      },
-      opacity: 1,
-    },
-    justification: 'justify-end',
-    padding: {
-      bottom: '0.5rem',
-      left: '2rem',
-      right: '0.5rem',
-      top: '0.5rem',
-    },
-  };
   const colour = {
     background: {
       colour: {
         alpha: 1,
-        hex: '#742222',
+        hex: '#ffffff',
       },
     },
     text: {
       colour: {
         alpha: 1,
-        hex: '#123456',
+        hex: '#000000',
       },
     },
   };
   return (
     <HeroUIProvider>
-      <div className="flex flex-col">
+      <div
+        className="flex flex-col"
+        style={{
+          backgroundColor: colour.background.colour.hex,
+          color: colour.text.colour.hex,
+        }}
+      >
         <div>
-          <Style styleProps={layout}>
+          <div className="container mx-auto w-full">
             {breadcrumbs && <Breadcrumbs items={breadcrumbs?.items} />}
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">
               {title}
             </h2>
+          </div>
+
+          <Style styleProps={layout}>
             <div>
               {sections?.map((section, key) => (
-                <Style key={key}>
+                <Style key={key} nested styleProps={section.layout}>
                   {section._type == 'columnLayout' && (
                     <ColumnSection section={section as SanityColumnSection} />
                   )}

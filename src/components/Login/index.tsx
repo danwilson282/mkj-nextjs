@@ -36,36 +36,34 @@ export const LoginModal: React.FC<LoginModalProps> = ({ session }) => {
   };
 
   return (
-
-      <LoginButton
-        user={session?.user}
-        registerPage={{
-          label: 'No account? Register now',
-          url: '/auth/register',
-        }}
-        signOut={{ label: 'Logout', handleSignOut: signOut }}
-        useGoogle={{
-          title: 'Google',
-          label: 'Sign in with Google',
-          handleGoogleSubmit: handleGoogleSubmit,
-        }}
-        useCredentials={{
-          title: 'Username / password',
-          label: 'Sign in with username/password',
-          email: email,
-          setEmail: setEmail,
-          password: password,
-          setPassword: setPassword,
-          handleCredentialsSubmit: handleCredentialsSubmit,
-        }}
-        useEmail={{
-          title: 'Magic link (passwordless)',
-          label: 'Sign in with Magic Link',
-          email: emailMagic,
-          setEmail: setEmailMagic,
-          handleEmailSubmit: handleEmailSubmit,
-        }}
-      />
-
+    <LoginButton
+      user={session?.user}
+      registerPage={{
+        label: 'No account? Register now',
+        url: '/auth/register',
+      }}
+      signOut={{ label: 'Logout', handleSignOut: signOut }}
+      useGoogle={{
+        title: 'Google',
+        label: 'Sign in with Google',
+        handleGoogleSubmit: handleGoogleSubmit,
+      }}
+      useCredentials={{
+        title: 'Username / password',
+        label: 'Sign in with username/password',
+        email: email,
+        setEmail: setEmail,
+        password: password,
+        setPassword: setPassword,
+        handleCredentialsSubmit: handleCredentialsSubmit,
+      }}
+      useEmail={{
+        title: 'Magic link (passwordless)',
+        label: 'Sign in with Magic Link',
+        email: emailMagic,
+        setEmail: setEmailMagic,
+        handleEmailSubmit: handleEmailSubmit,
+      }}
+    />
   );
 };

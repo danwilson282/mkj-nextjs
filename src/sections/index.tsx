@@ -3,6 +3,8 @@ import { HeroSection } from './hero';
 import { SanityHeroSection } from '@/sanity/types/sections/Hero';
 import { TextBlockSection } from './textBlock';
 import { SanityTextBlockSection } from '@/sanity/types/sections/TextBlock';
+import { ImageBlockSection } from './image';
+import { SanityImageSection } from '@/sanity/types/sections/Image';
 type SectionProps = {
   section: SanitySection;
 };
@@ -13,6 +15,8 @@ export const Section: React.FC<SectionProps> = ({ section }) => {
       return <HeroSection section={section as SanityHeroSection} />;
     case 'textBlock':
       return <TextBlockSection section={section as SanityTextBlockSection} />;
+    case 'imageBlock':
+      return <ImageBlockSection section={section as SanityImageSection} />;
     default:
       return <></>;
   }

@@ -2,11 +2,13 @@ import React, { FC } from 'react';
 import { PaddingType, SanityLayout } from '@/sanity/types/objects/Layout';
 import { cn } from '@/sanity/helpers/className';
 import { SanityColour } from '@/sanity/types/objects/Colour';
+import { vercelStegaClean } from '@vercel/stega';
 type StyleProps = {
   styleProps?: SanityLayout;
   devMode?: boolean;
   backgroundColour?: SanityColour;
   textColour?: SanityColour;
+  nested?: boolean;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 const Style: FC<StyleProps> = ({
@@ -16,9 +18,10 @@ const Style: FC<StyleProps> = ({
   backgroundColour,
   textColour,
   children,
+  nested,
 }) => {
   const remToTailwind = (rem: PaddingType) => {
-    switch (rem) {
+    switch (vercelStegaClean(rem)) {
       case '0':
         return 0;
       case '0.5rem':
@@ -48,15 +51,18 @@ const Style: FC<StyleProps> = ({
   return (
     <div
       className={cn(
-        backgroundColour ? `bg-[${backgroundColour?.hex}]` : 'bg-transparent',
-        textColour ? textColour.hex : 'text-black'
+        !nested && backgroundColour
+          ? `bg-[${backgroundColour?.hex}]`
+          : 'bg-transparent',
+        !nested && textColour && `text-[${textColour?.hex}]`
       )}
-      style={{ backgroundColor: backgroundColour?.hex, color: textColour?.hex }}
+      // style={{ backgroundColor: !nested ? backgroundColour?.hex : "", color: !nested ? textColour?.hex: ""}}
     >
+      {JSON.stringify(textColour)}
       {/* Colour and font */}
-      <div className="container mx-auto w-full">
+      <div className={cn('mx-auto w-full', !nested ? 'container' : '')}>
         {/* Container */}
-        <div className="px-4 sm:px-6 lg:px-8">
+        <div className={cn(!nested ? 'px-4 sm:px-6 lg:px-8' : '')}>
           {/* Default responsive padding */}
           <div className={cn(devMode ? 'bg-blue-500' : '', 'w-full')}>
             {/* Dev tools for colour to display padding. Set custom height of container */}

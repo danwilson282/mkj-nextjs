@@ -1,9 +1,14 @@
 import { groq } from 'next-sanity';
 import { layoutFragment } from '../objects/layoutFragment';
-export const textBlockFragment = groq`
+export const imageBlockFragment = groq`
         _type,
         title,
-        content,
+        "image": image.asset->,
+        width,
+        height,
+        radius,
+        shadow,
+        zoom,
         layout{
             ${layoutFragment}
         }

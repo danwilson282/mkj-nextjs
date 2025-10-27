@@ -15,7 +15,7 @@ export async function generateMetadata({
   const slugParts = await params;
   const absoluteUrl = `/${slugParts.slug.join('/')}`;
   const pageObject = await getPageDataFromRelativeUrl(absoluteUrl);
-  
+
   return {
     title:
       pageObject?.pageMeta?.metaTitle ?? process.env.NEXT_PUBLIC_META_TITLE,
@@ -50,24 +50,19 @@ export default async function PostPage({
   const slugParts = await params;
   const absoluteUrl = `/${slugParts.slug.join('/')}`;
   const idFromUrl = await getPageDataFromRelativeUrl(absoluteUrl);
-  const session = (await auth()) as Session;  
+  const session = (await auth()) as Session;
   if (idFromUrl) {
     const pageType = idFromUrl._type;
     const id = idFromUrl._id;
     if (!id) {
       notFound();
     }
-    if (idFromUrl.requiresLogin && !session){
+    if (idFromUrl.requiresLogin && !session) {
       return <ErrorPage>You need to be logged in to view this page.</ErrorPage>;
     }
     switch (pageType) {
       case 'page':
-        return (
-          <PageServer
-            isDraft={isDraft}
-            id={id}
-          />
-        );
+        return <PageServer isDraft={isDraft} id={id} />;
       case 'post':
         return <PostServer isDraft={isDraft} id={id} />;
       default:
