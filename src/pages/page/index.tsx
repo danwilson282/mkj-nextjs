@@ -6,17 +6,8 @@ import { getRelativeUrlFromId } from '@/sanity/helpers/getRelativeUrl';
 interface PageServerProps {
   id: string;
   isDraft: boolean;
-  requiresLogin?: boolean;
 }
-const PageServer: FC<PageServerProps> = async ({
-  id,
-  isDraft,
-  requiresLogin,
-}) => {
-  // Check if user is logged in
-  // if (requiresLogin){
-  //     return <ErrorPage>You need to be logged in</ErrorPage>
-  // }
+const PageServer: FC<PageServerProps> = async ({ id, isDraft }) => {
   const page = await getPage(isDraft, { id });
   const relativeUrl = await getRelativeUrlFromId(id);
   const breadcrumbsItems = relativeUrl.split('/').map((val) => ({

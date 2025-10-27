@@ -23,3 +23,11 @@ export const pageMiniFragment = groq`
                 ${pageMetaFragment}
         }
 `;
+
+export const pageUrlFragment = groq`
+        _id, 
+        title,
+        slug,
+        requiresLogin,
+        parent->{_id, slug}
+`;

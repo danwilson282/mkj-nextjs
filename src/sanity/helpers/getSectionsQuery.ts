@@ -1,4 +1,5 @@
 import { heroFragment } from '../fragments/sections/hero';
+import { imageBlockFragment } from '../fragments/sections/imageBlock';
 import { textBlockFragment } from '../fragments/sections/textBlock';
 
 export const getSections = (sectionTypes: string[]): string => {
@@ -9,6 +10,8 @@ export const getSections = (sectionTypes: string[]): string => {
           return `_type == "hero" => { ${heroFragment} }`;
         case 'textBlock':
           return `_type == "textBlock" => { ${textBlockFragment} }`;
+        case 'imageBlock':
+          return `_type == "imageBlock" => { ${imageBlockFragment} }`;
         case 'columnLayout':
           //prefetch types in each column
           const preFetch = `

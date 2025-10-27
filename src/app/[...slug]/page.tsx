@@ -4,7 +4,9 @@ import { getPageDataFromRelativeUrl } from '@/sanity/helpers/getRelativeUrl';
 import PostServer from '@/pages/post';
 import PageServer from '@/pages/page';
 import { Metadata } from 'next';
-
+import { auth } from '@/lib/auth/auth';
+import { Session } from 'next-auth';
+import ErrorPage from '@/pages/error';
 export async function generateMetadata({
   params,
 }: {
@@ -48,22 +50,19 @@ export default async function PostPage({
   const slugParts = await params;
   const absoluteUrl = `/${slugParts.slug.join('/')}`;
   const idFromUrl = await getPageDataFromRelativeUrl(absoluteUrl);
-
+  const session = (await auth()) as Session;
   if (idFromUrl) {
     const pageType = idFromUrl._type;
     const id = idFromUrl._id;
     if (!id) {
       notFound();
     }
+    if (idFromUrl.requiresLogin && !session) {
+      return <ErrorPage>You need to be logged in to view this page.</ErrorPage>;
+    }
     switch (pageType) {
       case 'page':
-        return (
-          <PageServer
-            isDraft={isDraft}
-            id={id}
-            requiresLogin={idFromUrl.requiresLogin}
-          />
-        );
+        return <PageServer isDraft={isDraft} id={id} />;
       case 'post':
         return <PostServer isDraft={isDraft} id={id} />;
       default:

@@ -1,8 +1,16 @@
 import { groq } from 'next-sanity';
-import { pageMiniFragment } from '../fragments/pageFragment';
+import { pageMiniFragment, pageUrlFragment } from '../fragments/pageFragment';
 import { getSections } from '../helpers/getSectionsQuery';
 import { pageMetaFragment } from '../fragments/objects/pageMetaFragment';
 import { layoutFragment } from '../fragments/objects/layoutFragment';
+
+export const pageUrlsQuery = groq`*[
+  _type == "page"
+]
+{
+  ${pageUrlFragment}
+}`;
+
 export const pagesQuery = groq`*[
   _type == "page"
   && defined(slug.current)
