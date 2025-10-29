@@ -1,6 +1,7 @@
 import { groq } from 'next-sanity';
 import { loadQuery } from '../lib/loadQuery';
 import { SanityPageMeta } from '../types/objects/PageMeta';
+import { SanityPage } from '../types/Page';
 
 type SlugPart = {
   parent?: string;
@@ -83,3 +84,31 @@ export const getPageDataFromRelativeUrl = async (
     pageMeta: currentPage?.pageMeta ?? {},
   };
 };
+
+export async function enrichInternalLinks(doc: SanityPage): Promise<SanityPage> {
+  async function processNode(node: any): Promise<any> {
+    if (Array.isArray(node)) {
+      return Promise.all(node.map(processNode));
+    }
+
+    if (node && typeof node === 'object') {
+      // 🧩 If this node is a link markDef
+      if (node._type === 'link' && node.linkType === 'internal' && node.internalLink?._ref) {
+        const internalUrl = await getRelativeUrlFromId(node.internalLink._ref);
+        return { ...node, internalUrl };
+      }
+
+      // 🧠 Otherwise recursively process children
+      const entries = await Promise.all(
+        Object.entries(node).map(async ([key, value]) => [key, await processNode(value)])
+      );
+
+      return Object.fromEntries(entries);
+    }
+
+    // Return primitives as-is
+    return node;
+  }
+
+  return await processNode(doc);
+}
