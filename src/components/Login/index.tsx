@@ -15,7 +15,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ session }) => {
 
   const handleCredentialsSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await signIn('credentials', {
+    await signIn('credentials', {
       redirect: true,
       email,
       password,

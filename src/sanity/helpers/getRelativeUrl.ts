@@ -85,25 +85,41 @@ export const getPageDataFromRelativeUrl = async (
   };
 };
 
-export async function enrichInternalLinks(doc: SanityPage): Promise<SanityPage> {
-  async function processNode(node: any): Promise<any> {
+export interface InternalLinkMarkDef {
+  _type: 'link';
+  linkType: 'internal';
+  internalLink: { _ref: string };
+  internalUrl?: string;
+  [key: string]: unknown;
+}
+
+// Define the relative URL resolver (you already have this)
+
+export async function enrichInternalLinks(
+  doc: SanityPage
+): Promise<SanityPage> {
+  async function processNode<T>(node: T): Promise<T> {
     if (Array.isArray(node)) {
-      return Promise.all(node.map(processNode));
+      const processed = await Promise.all(node.map(processNode));
+      return processed as T;
     }
 
-    if (node && typeof node === 'object') {
-      // 🧩 If this node is a link markDef
-      if (node._type === 'link' && node.linkType === 'internal' && node.internalLink?._ref) {
+    if (isRecord(node)) {
+      // 🔗 If this node is an internal link markDef
+      if (isInternalLinkMarkDef(node)) {
         const internalUrl = await getRelativeUrlFromId(node.internalLink._ref);
-        return { ...node, internalUrl };
+        return { ...node, internalUrl } as T;
       }
 
-      // 🧠 Otherwise recursively process children
+      // 🧩 Recursively process nested objects
       const entries = await Promise.all(
-        Object.entries(node).map(async ([key, value]) => [key, await processNode(value)])
+        Object.entries(node).map(async ([key, value]) => [
+          key,
+          await processNode(value),
+        ])
       );
 
-      return Object.fromEntries(entries);
+      return Object.fromEntries(entries) as T;
     }
 
     // Return primitives as-is
@@ -111,4 +127,22 @@ export async function enrichInternalLinks(doc: SanityPage): Promise<SanityPage> 
   }
 
   return await processNode(doc);
+}
+
+/**
+ * ✅ Type guard: checks if value is a record (non-null object)
+ */
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+/**
+ * ✅ Type guard: checks if a node is an InternalLinkMarkDef
+ */
+function isInternalLinkMarkDef(node: unknown): node is InternalLinkMarkDef {
+  if (!isRecord(node)) return false;
+  if (node._type !== 'link' || node.linkType !== 'internal') return false;
+
+  const internalLink = node.internalLink;
+  return isRecord(internalLink) && typeof internalLink._ref === 'string';
 }

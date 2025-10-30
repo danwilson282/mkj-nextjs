@@ -6,9 +6,5 @@ type SectionProps = {
 };
 
 export const TextBlockSection: React.FC<SectionProps> = ({ section }) => {
-  return (
-    <TextBlock
-      value={section.content}
-    />
-  );
+  return <TextBlock value={section.content} />;
 };

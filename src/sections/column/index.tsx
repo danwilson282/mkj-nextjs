@@ -29,15 +29,15 @@ export const ColumnSection: React.FC<SectionProps> = ({ section }) => {
       case 'full':
         return 'w-full';
       case 'three-quarters':
-        return 'w-3/4';
+        return 'w-full md:w-3/4 lg:w-3/4';
       case 'two-thirds':
-        return 'w-2/3';
+        return 'w-full md:w-2/3 lg:w-2/3';
       case 'half':
-        return 'w-1/2';
+        return 'w-full sm:w-3/4 md:w-1/2 lg:w-1/2';
       case 'third':
-        return 'w-1/3';
+        return 'w-full sm:w-1/2 md:w-1/3 lg:w-1/3';
       case 'quarter':
-        return 'w-1/4';
+        return 'w-full sm:w-1/2 md:w-1/3 lg:w-1/4';
       default:
         return 'w-full';
     }

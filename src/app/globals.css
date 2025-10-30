@@ -1,15 +1,22 @@
+/* @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap'); */
 @import "tailwindcss";
- @config "../../tailwind.config.ts";
+@config "../../tailwind.config.ts";
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #1C2333 ;
+  --foreground: #F5F9FC;
+  --header: #F5F9FC;
+  --primary: #795EFF;
+  --secondary: #6cd97e;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --font-sans: 'IBM Plex Sans','Open Sans', 'sans-serif';
+  --font-mono: ui-monospace, monospace;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,8 +29,47 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-plex-sans), var(--font-open-sans), sans-serif;
 }
-/* @tailwind base;
-@tailwind components; */
-/* @tailwind utilities; */
+
+/* === Headings === */
+h1, h2, h3, h4 {
+  color: var(--header, var(--foreground));
+  font-family: var(--font-plex-sans), var(--font-open-sans), sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Individual heading sizes */
+h1 {
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(1.75rem, 3vw, 2rem);
+  letter-spacing: -0.015em;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 2.5vw, 1.75rem);
+  letter-spacing: -0.01em;
+}
+
+h4 {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  letter-spacing: -0.005em;
+  font-weight: 500;
+}
+
+/* Optional subtle styling for hierarchy */
+h1 + p,
+h2 + p,
+h3 + p,
+h4 + p {
+  margin-top: 0.5rem;
+  color: color-mix(in srgb, var(--foreground) 90%, var(--color-background));
+  font-size: 1rem;
+}
