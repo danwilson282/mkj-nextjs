@@ -24,9 +24,9 @@ const Header: FC<HeaderProps> = ({ header }) => {
           className="h-12 w-16 m-2 py-2"
         />
         <div className="w-full container mx-auto max-w-7xl">
-          <h1 className="text-xl font-semibold text-white p-6 ">
+          <p className="text-xl font-semibold text-header p-6 ">
             {header.siteTitle}
-          </h1>
+          </p>
         </div>
       </div>
     </header>

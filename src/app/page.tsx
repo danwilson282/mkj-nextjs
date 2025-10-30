@@ -1,23 +1,46 @@
-import Link from 'next/link';
 import { draftMode } from 'next/headers';
-import { getPosts } from '@/sanity/fetch/getPosts';
+import { notFound } from 'next/navigation';
+import { getPageDataFromRelativeUrl } from '@/sanity/helpers/getRelativeUrl';
+import PageServer from '@/pages/page';
+export async function generateMetadata() {
+  const absoluteUrl = `home`;
+  const pageObject = await getPageDataFromRelativeUrl(absoluteUrl);
+  return {
+    title:
+      pageObject?.pageMeta?.metaTitle ?? process.env.NEXT_PUBLIC_META_TITLE,
+    description:
+      pageObject?.pageMeta?.metaDescription ??
+      process.env.NEXT_PUBLIC_META_DESCRIPTION,
+    keywords: pageObject?.pageMeta?.metaKeywords ?? [],
+    alternates: {
+      canonical: pageObject?.pageMeta?.canonicalUrl,
+    },
+    openGraph: {
+      title:
+        pageObject?.pageMeta?.openGraphTitle ??
+        process.env.NEXT_PUBLIC_META_TITLE,
+      description:
+        pageObject?.pageMeta?.openGraphDescription ??
+        process.env.NEXT_PUBLIC_META_DESCRIPTION,
+    },
+    robots: {
+      index: !(pageObject?.pageMeta?.noIndex || pageObject?.requiresLogin),
+      follow: !(pageObject?.pageMeta?.noFollow || pageObject?.requiresLogin),
+    },
+  };
+}
 
-export default async function IndexPage() {
-  const { isEnabled } = await draftMode();
-  const posts = (await getPosts(isEnabled)) || [];
-  return (
-    <main className="container mx-auto min-h-screen max-w-3xl p-8">
-      <h1 className="text-4xl font-bold mb-8">Posts</h1>
-      <ul className="flex flex-col gap-y-4">
-        {posts.map((post) => (
-          <li className="hover:underline" key={post._id}>
-            <Link href={`/${post.slug.current}`}>
-              <h2 className="text-xl font-semibold">{post.title}</h2>
-              <p>{new Date(post.publishedAt).toLocaleDateString()}</p>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </main>
-  );
+export default async function PostPage() {
+  const isDraft = (await draftMode()).isEnabled;
+  const idFromUrl = await getPageDataFromRelativeUrl('home');
+  // return (<pre>{JSON.stringify(idFromUrl)}</pre>)
+  if (idFromUrl) {
+    const id = idFromUrl._id;
+    if (!id) {
+      notFound();
+    }
+    return <PageServer isDraft={isDraft} id={id} />;
+  } else {
+    notFound();
+  }
 }

@@ -29,6 +29,9 @@ export const pageQuery = (includedSections: string[]) => groq`
       _type == "columnLayout" => {
                                       _type,
                                       alignment,
+                                      layout{
+                                        ${layoutFragment}
+                                      },
                                       columns[]{
                                         width,
                                         gap,

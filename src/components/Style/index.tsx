@@ -36,18 +36,10 @@ const Style: FC<StyleProps> = ({
         return 0;
     }
   };
-  const paddingMap: Record<PaddingType, string> = {
-    '0': '0',
-    '0.5rem': '2',
-    '1rem': '4',
-    '2rem': '8',
-    '3rem': '12',
-  };
   const opacityToTailwind = (opacity: number) => {
-    const percent = opacity * 100;
+    const percent = vercelStegaClean(opacity) * 100;
     return `opacity-${percent}`;
   };
-  const bgColor = '#7be311'; // dynamically generated color string
   return (
     <div
       className={cn(
@@ -56,13 +48,20 @@ const Style: FC<StyleProps> = ({
           : 'bg-transparent',
         !nested && textColour && `text-[${textColour?.hex}]`
       )}
-      // style={{ backgroundColor: !nested ? backgroundColour?.hex : "", color: !nested ? textColour?.hex: ""}}
     >
-      {JSON.stringify(textColour)}
       {/* Colour and font */}
-      <div className={cn('mx-auto w-full', !nested ? 'container' : '')}>
+      <div
+        className={cn(
+          'mx-auto w-full',
+          !vercelStegaClean(nested) ? 'container' : ''
+        )}
+      >
         {/* Container */}
-        <div className={cn(!nested ? 'px-4 sm:px-6 lg:px-8' : '')}>
+        <div
+          className={cn(
+            !vercelStegaClean(nested) ? 'px-4 sm:px-6 lg:px-8' : ''
+          )}
+        >
           {/* Default responsive padding */}
           <div className={cn(devMode ? 'bg-blue-500' : '', 'w-full')}>
             {/* Dev tools for colour to display padding. Set custom height of container */}
@@ -87,10 +86,10 @@ const Style: FC<StyleProps> = ({
                 className={cn(
                   'flex flex-col w-full',
                   styleProps?.alignment
-                    ? `items-${styleProps.alignment}`
+                    ? `items-${vercelStegaClean(styleProps.alignment)}`
                     : 'items-start',
                   styleProps?.justification
-                    ? styleProps.justification
+                    ? vercelStegaClean(styleProps.justification)
                     : 'justify-start',
                   styleProps && styleProps?.backgroundColor?.opacity
                     ? opacityToTailwind(styleProps.backgroundColor.opacity)
@@ -101,8 +100,9 @@ const Style: FC<StyleProps> = ({
                 style={
                   !devMode
                     ? {
-                        backgroundColor:
-                          styleProps?.backgroundColor?.colour?.hex,
+                        backgroundColor: vercelStegaClean(
+                          styleProps?.backgroundColor?.colour?.hex
+                        ),
                       }
                     : {}
                 }

@@ -12,7 +12,19 @@ import { getServerSession } from 'next-auth/next';
 import type { Session } from 'next-auth';
 import { authOptions } from '@/lib/auth/authProvider';
 import AuthProvider from './context/AuthProvider';
+import { IBM_Plex_Sans, Open_Sans } from 'next/font/google';
 
+export const ibmPlexSans = IBM_Plex_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  variable: '--font-plex-sans',
+});
+
+export const openSans = Open_Sans({
+  subsets: ['latin'],
+  weight: ['400', '600', '700'],
+  variable: '--font-open-sans',
+});
 export default async function RootLayout({
   children,
 }: Readonly<{

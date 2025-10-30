@@ -1,4 +1,4 @@
-export default {
+const setup = {
   preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'node',
   extensionsToTreatAsEsm: ['.ts'],
@@ -13,3 +13,5 @@ export default {
   setupFiles: ['./jest.setup.ts'],
   setupFilesAfterEnv: ['./test/setup-prisma.ts'],
 };
+
+export default setup;

@@ -32,6 +32,7 @@ const TopNav: FC<TopNavProps> = async ({ topNav }) => {
           url = link.externalUrl ?? '/';
           url = (
             <a
+              className="text-header hover:text-primary"
               href={link.externalUrl ?? '/'}
               target="_blank"
               rel="noopener noreferrer"
@@ -46,7 +47,7 @@ const TopNav: FC<TopNavProps> = async ({ topNav }) => {
           url = (
             <Link
               href={relativeUrl ?? '/'}
-              className="text-white hover:text-gray-300"
+              className="text-header hover:text-primary"
             >
               {link.label}
             </Link>
@@ -55,7 +56,7 @@ const TopNav: FC<TopNavProps> = async ({ topNav }) => {
 
         default:
           url = (
-            <Link href={'/'} className="text-white hover:text-gray-300">
+            <Link href={'/'} className="text-header hover:text-primary">
               {link.label}
             </Link>
           );
@@ -70,7 +71,7 @@ const TopNav: FC<TopNavProps> = async ({ topNav }) => {
   );
 
   return (
-    <nav className="bg-gray-800 text-white">
+    <nav className="bg-background text-header">
       <div className="container mx-auto w-full">
         {/* <div className="px-4 sm:px-6 lg:px-8"> */}
         <div className="">

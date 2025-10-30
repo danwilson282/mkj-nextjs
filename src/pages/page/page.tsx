@@ -23,39 +23,22 @@ interface PageClientProps {
 const PageClient: FC<PageClientProps> = ({
   title,
   sections,
-  pageMeta,
   layout,
   breadcrumbs,
 }) => {
-  const colour = {
-    background: {
-      colour: {
-        alpha: 1,
-        hex: '#ffffff',
-      },
-    },
-    text: {
-      colour: {
-        alpha: 1,
-        hex: '#000000',
-      },
-    },
-  };
   return (
     <HeroUIProvider>
       <div
         className="flex flex-col"
-        style={{
-          backgroundColor: colour.background.colour.hex,
-          color: colour.text.colour.hex,
-        }}
+        // style={{
+        //   backgroundColor: colour.background.colour.hex,
+        //   color: colour.text.colour.hex,
+        // }}
       >
         <div>
           <div className="container mx-auto w-full">
             {breadcrumbs && <Breadcrumbs items={breadcrumbs?.items} />}
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              {title}
-            </h2>
+            <h2 className="text-2xl font-semibold text-header mb-4">{title}</h2>
           </div>
 
           <Style styleProps={layout}>

@@ -7,6 +7,6 @@ export type SiteNavProps = {
   session: Session;
 };
 
-export const SiteNav: React.FC<SiteNavProps> = ({ nav, session }) => {
+export const SiteNav: React.FC<SiteNavProps> = ({ nav }) => {
   return <NestedNav menuTitle="Menu" navItems={nav} />;
 };
