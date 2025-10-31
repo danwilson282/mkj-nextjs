@@ -1,5 +1,5 @@
 'use client';
-import { FC } from 'react';
+import { FC, JSX } from 'react';
 import {
   Breadcrumbs,
   BreadcrumbProps,
@@ -9,12 +9,10 @@ import { SanityPageMeta } from '@/sanity/types/objects/PageMeta';
 import { SanityLayout } from '@/sanity/types/objects/Layout';
 import Style from '@/components/Style';
 import { HeroUIProvider } from '@heroui/react';
-import { Section } from '@/sections';
-import { ColumnSection } from '@/sections/column';
-import { SanityColumnSection } from '@/sanity/types/sections/ColumnSection';
 interface PageClientProps {
   title: string;
   sections?: SanitySection[];
+  sectionComponents?: JSX.Element[] | undefined
   pageMeta?: SanityPageMeta;
   layout?: SanityLayout;
   breadcrumbs?: BreadcrumbProps;
@@ -22,7 +20,7 @@ interface PageClientProps {
 
 const PageClient: FC<PageClientProps> = ({
   title,
-  sections,
+  sectionComponents,
   layout,
   breadcrumbs,
 }) => {
@@ -43,14 +41,7 @@ const PageClient: FC<PageClientProps> = ({
 
           <Style styleProps={layout}>
             <div>
-              {sections?.map((section, key) => (
-                <Style key={key} nested styleProps={section.layout}>
-                  {section._type == 'columnLayout' && (
-                    <ColumnSection section={section as SanityColumnSection} />
-                  )}
-                  <Section section={section} />
-                </Style>
-              ))}
+              {sectionComponents}
             </div>
           </Style>
         </div>

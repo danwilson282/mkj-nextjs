@@ -8,5 +8,6 @@ export type SiteNavProps = {
 };
 
 export const SiteNav: React.FC<SiteNavProps> = ({ nav }) => {
+  console.log(nav)
   return <NestedNav menuTitle="Menu" navItems={nav} />;
 };

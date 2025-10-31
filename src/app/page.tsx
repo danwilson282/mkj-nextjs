@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { getPageDataFromRelativeUrl } from '@/sanity/helpers/getRelativeUrl';
 import PageServer from '@/pages/page';
 export async function generateMetadata() {
-  const absoluteUrl = `home`;
+  const absoluteUrl = ``;
   const pageObject = await getPageDataFromRelativeUrl(absoluteUrl);
   return {
     title:
@@ -32,7 +32,7 @@ export async function generateMetadata() {
 
 export default async function PostPage() {
   const isDraft = (await draftMode()).isEnabled;
-  const idFromUrl = await getPageDataFromRelativeUrl('home');
+  const idFromUrl = await getPageDataFromRelativeUrl('');
   // return (<pre>{JSON.stringify(idFromUrl)}</pre>)
   if (idFromUrl) {
     const id = idFromUrl._id;
