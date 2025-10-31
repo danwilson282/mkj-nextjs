@@ -1,7 +1,7 @@
 import { groq } from 'next-sanity';
 import { loadQuery } from '../lib/loadQuery';
 import { SanityPageMeta } from '../types/objects/PageMeta';
-import { SanityPage } from '../types/Page';
+import { SanityTextBlockSection } from '../types/sections/TextBlock';
 
 type SlugPart = {
   parent?: string;
@@ -42,14 +42,48 @@ export const getRelativeUrlFromId = async (id: string): Promise<string> => {
 export const getPageDataFromRelativeUrl = async (
   url: string
 ): Promise<Partial<SlugPart> | null> => {
-  // Normalize and split URL path
-  const segments = url.replace(/^\/+|\/+$/g, '').split('/');
+  // Normalize and split URL path, but handle homepage `/`
+  const normalizedUrl = url.replace(/^\/+|\/+$/g, '');
+  const isHomepage = normalizedUrl === '';
+  const segments = isHomepage ? [] : normalizedUrl.split('/');
 
   let parentId: string | undefined = undefined;
   let currentPage: SlugPart | null = null;
 
+  // Special case for homepage
+  if (isHomepage) {
+    const query: string = groq`
+      *[
+        slug.current in ["/", ""] && !defined(parent)
+      ][0] {
+        _id,
+        _type,
+        requiresLogin,
+        hideFromNav,
+        pageMeta,
+        "slug": slug.current,
+        "parent": parent._ref
+      }
+    `;
+
+    const result: SlugPart = await loadQuery<Record<string, unknown>, SlugPart>(
+      query,
+      false,
+      {}
+    );
+
+    if (!result) return null;
+
+    return {
+      _id: result._id,
+      _type: result._type,
+      requiresLogin: result.requiresLogin,
+      pageMeta: result.pageMeta ?? {},
+    };
+  }
+
+  // For all other pages
   for (const segment of segments) {
-    // GROQ query to find a document by slug and optional parent
     const query: string = groq`
       *[
         slug.current == $slug &&
@@ -71,10 +105,10 @@ export const getPageDataFromRelativeUrl = async (
       { slug: segment, parentId }
     );
 
-    if (!result) return null; // Segment not found
+    if (!result) return null;
 
     currentPage = result;
-    parentId = result._id; // Set parent for next iteration
+    parentId = result._id;
   }
 
   return {
@@ -85,64 +119,69 @@ export const getPageDataFromRelativeUrl = async (
   };
 };
 
-export interface InternalLinkMarkDef {
-  _type: 'link';
-  linkType: 'internal';
-  internalLink: { _ref: string };
+
+type InternalLink = {
+  _type: "reference";
+  _ref: string;
+};
+
+type MarkDefBase = {
+  _key: string;
+  _type: string;
+};
+
+type InternalLinkMarkDef = MarkDefBase & {
+  _type: "link";
+  linkType: "internal" | "external";
+  internalLink?: InternalLink;
   internalUrl?: string;
-  [key: string]: unknown;
+};
+
+type SpanChild = {
+  _type: "span";
+  text: string;
+  marks?: string[];
+};
+
+export type Block = {
+  _type: "block";
+  children: SpanChild[];
+  markDefs?: (InternalLinkMarkDef | MarkDefBase)[];
+};
+
+// 🧠 Type guard for internal link marks
+function isInternalLinkMarkDef(markDef: unknown): markDef is InternalLinkMarkDef {
+  return (
+    typeof markDef === "object" &&
+    markDef !== null &&
+    (markDef as InternalLinkMarkDef)._type === "link" &&
+    (markDef as InternalLinkMarkDef).linkType === "internal"
+  );
 }
 
-// Define the relative URL resolver (you already have this)
+// 🔧 The enrichment function
+export async function enrichBlockInternalLinks(
+  section: SanityTextBlockSection
+): Promise<SanityTextBlockSection> {
+  const enrichedContent = await Promise.all(
+    section.content.map(async (block) => {
+      if (!block.markDefs?.length) return block;
 
-export async function enrichInternalLinks(
-  doc: SanityPage
-): Promise<SanityPage> {
-  async function processNode<T>(node: T): Promise<T> {
-    if (Array.isArray(node)) {
-      const processed = await Promise.all(node.map(processNode));
-      return processed as T;
-    }
+      const enrichedMarkDefs = await Promise.all(
+        block.markDefs.map(async (markDef) => {
+          if (isInternalLinkMarkDef(markDef) && markDef.internalLink?._ref && !markDef.internalUrl) {
+            const internalUrl = await getRelativeUrlFromId(markDef.internalLink._ref);
+            return { ...markDef, internalUrl };
+          }
 
-    if (isRecord(node)) {
-      // 🔗 If this node is an internal link markDef
-      if (isInternalLinkMarkDef(node)) {
-        const internalUrl = await getRelativeUrlFromId(node.internalLink._ref);
-        return { ...node, internalUrl } as T;
-      }
-
-      // 🧩 Recursively process nested objects
-      const entries = await Promise.all(
-        Object.entries(node).map(async ([key, value]) => [
-          key,
-          await processNode(value),
-        ])
+          return markDef;
+        })
       );
 
-      return Object.fromEntries(entries) as T;
-    }
+      return { ...block, markDefs: enrichedMarkDefs };
+    })
+  );
 
-    // Return primitives as-is
-    return node;
-  }
-
-  return await processNode(doc);
+  return { ...section, content: enrichedContent };
 }
 
-/**
- * ✅ Type guard: checks if value is a record (non-null object)
- */
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null;
-}
-
-/**
- * ✅ Type guard: checks if a node is an InternalLinkMarkDef
- */
-function isInternalLinkMarkDef(node: unknown): node is InternalLinkMarkDef {
-  if (!isRecord(node)) return false;
-  if (node._type !== 'link' || node.linkType !== 'internal') return false;
-
-  const internalLink = node.internalLink;
-  return isRecord(internalLink) && typeof internalLink._ref === 'string';
-}

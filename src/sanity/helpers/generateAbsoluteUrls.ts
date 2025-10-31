@@ -7,14 +7,16 @@ type MenuItem = NavItems[number];
 export const generateAbsoluteUrls = async (isDraft: boolean) => {
   const pages = await getUrls(isDraft);
 
-  function buildUrl(
-    page: SanityPage,
-    allPages: SanityPage[] | undefined
-  ): string {
-    const parent = allPages?.find((p) => p._id === page.parent?._id);
-    if (!parent) return `/${page.slug.current}`;
-    return `${buildUrl(parent, allPages)}/${page.slug.current}`;
-  }
+function buildUrl(page: SanityPage, allPages: SanityPage[] | undefined): string {
+  const parent = allPages?.find((p) => p._id === page.parent?._id);
+
+  const slug = page.slug.current === '/' ? '' : page.slug.current; // homepage is empty
+
+  if (!parent) return `/${slug}`; // returns '/' if slug is empty
+
+  const parentUrl = buildUrl(parent, allPages);
+  return parentUrl === '/' ? `/${slug}` : `${parentUrl}/${slug}`;
+}
   const pagesWithUrls: SanityPage[] | undefined = pages?.map((p) => ({
     ...p,
     relativeUrl: buildUrl(p, pages),

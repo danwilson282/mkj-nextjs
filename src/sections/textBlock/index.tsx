@@ -1,10 +1,13 @@
+"use server"
 import { SanityTextBlockSection } from '@/sanity/types/sections/TextBlock';
-import { TextBlock } from '@danwilson282/mkj-component-library';
 import React from 'react';
+import { TextBlockSectionClient } from './TextBlock';
+import { enrichBlockInternalLinks } from '@/sanity/helpers/getRelativeUrl';
 type SectionProps = {
   section: SanityTextBlockSection;
 };
 
-export const TextBlockSection: React.FC<SectionProps> = ({ section }) => {
-  return <TextBlock value={section.content} />;
+export const TextBlockSection: React.FC<SectionProps> = async ({ section }) => {
+  const sectionWithLinks = await enrichBlockInternalLinks(section);
+  return <TextBlockSectionClient section={sectionWithLinks} />;
 };
