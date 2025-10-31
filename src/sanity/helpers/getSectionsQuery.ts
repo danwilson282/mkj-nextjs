@@ -1,4 +1,5 @@
 import { heroFragment } from '../fragments/sections/hero';
+import { iconFragment } from '../fragments/sections/icon';
 import { imageBlockFragment } from '../fragments/sections/imageBlock';
 import { textBlockFragment } from '../fragments/sections/textBlock';
 
@@ -30,6 +31,8 @@ export const getSections = (sectionTypes: string[]): string => {
           //populate
           //return
           return `_type=="columnLayout" => { ${preFetch} }`;
+        case 'icon':
+          return `_type == "icon" => { ${iconFragment} }`;
         default:
           return '';
       }
