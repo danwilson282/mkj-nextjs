@@ -36,7 +36,6 @@ const sectionComponents = () => (
     return (
       <PageClient
         title={page.title}
-        sections={page.sections}
         sectionComponents={sectionComponents()}
         pageMeta={page.pageMeta}
         layout={page.layout}

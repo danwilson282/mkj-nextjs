@@ -7,6 +7,7 @@ import { Metadata } from 'next';
 import { auth } from '@/lib/auth/auth';
 import { Session } from 'next-auth';
 import ErrorPage from '@/pages/error';
+import FormServer from '@/pages/form';
 export async function generateMetadata({
   params,
 }: {
@@ -64,6 +65,8 @@ export default async function PostPage({
         return <PageServer isDraft={isDraft} id={id} />;
       case 'post':
         return <PostServer isDraft={isDraft} id={id} />;
+      case 'form':
+        return <FormServer isDraft={isDraft} id={id} />;
       default:
         notFound();
     }
