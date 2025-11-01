@@ -1,5 +1,6 @@
 // components/Form.tsx
-import { FC} from 'react';
+"use client"
+import { FC, useState, FormEvent} from 'react';
 import { cn } from '@/sanity/helpers/className';
 import { SanityFormField } from '@/sanity/types/FormField';
 import FormField from './FormField';
@@ -15,20 +16,24 @@ interface FormProps {
 
 const Form: FC<FormProps> = ({ fields, submitText, submittedText, slug }) => {
   // Explicitly type the submitted data (can be refined later)
-//   const [submitted, setSubmitted] = useState<Record<string, FormDataEntryValue> | null>(null);
-
-//   // Type the event properly
-//   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-//     e.preventDefault();
-//     const formData = new FormData(e.currentTarget);
-//     const data = Object.fromEntries(formData.entries());
-//     setSubmitted(data);
-//   };
-const serverAction = slug === 'register' ? register : fallback;
+  const [submitted, setSubmitted] = useState(false)
+    //Show submit message
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    setSubmitted(true);
+  };
+  // Select server action based on slug
+    const serverAction = () => {
+        switch (slug){
+            case "register":
+                return register
+            default:
+                return fallback
+        }
+    }
   return (
     <div>
       <div className="flex flex-col gap-4">
-        <HeroForm className="w-full" action={serverAction}>
+        <HeroForm className="w-full" onSubmit={onSubmit} action={serverAction()}>
           {fields.map((field, key) => (
             <FormField key={key} field={field} />
           ))}
@@ -37,11 +42,11 @@ const serverAction = slug === 'register' ? register : fallback;
             {submitText}
           </Button>
 
-          {/* {submitted && (
+          {submitted && (
             <div className="text-small text-secondary">
-             {submittedText}  <code>{JSON.stringify(submitted)}</code>
+             {submittedText}
             </div>
-          )} */}
+          )}
         </HeroForm>
       </div>
     </div>
