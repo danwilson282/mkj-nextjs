@@ -1,32 +1,34 @@
 // components/Form.tsx
-import { FC, useState, FormEvent } from 'react';
+import { FC} from 'react';
 import { cn } from '@/sanity/helpers/className';
 import { SanityFormField } from '@/sanity/types/FormField';
 import FormField from './FormField';
 import { Button, Form as HeroForm } from '@heroui/react';
-
+import { register, fallback } from '@/actions/formActions';
 interface FormProps {
   fields: SanityFormField[];
   submitText: string;
-  submittedText: string
+  submittedText: string;
+  slug: string;
+//   submit: (formData: FormData) => Promise<void> | void;
 }
 
-const Form: FC<FormProps> = ({ fields, submitText, submittedText }) => {
+const Form: FC<FormProps> = ({ fields, submitText, submittedText, slug }) => {
   // Explicitly type the submitted data (can be refined later)
-  const [submitted, setSubmitted] = useState<Record<string, FormDataEntryValue> | null>(null);
+//   const [submitted, setSubmitted] = useState<Record<string, FormDataEntryValue> | null>(null);
 
-  // Type the event properly
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-    setSubmitted(data);
-  };
-
+//   // Type the event properly
+//   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+//     e.preventDefault();
+//     const formData = new FormData(e.currentTarget);
+//     const data = Object.fromEntries(formData.entries());
+//     setSubmitted(data);
+//   };
+const serverAction = slug === 'register' ? register : fallback;
   return (
     <div>
       <div className="flex flex-col gap-4">
-        <HeroForm className="w-full" onSubmit={onSubmit}>
+        <HeroForm className="w-full" action={serverAction}>
           {fields.map((field, key) => (
             <FormField key={key} field={field} />
           ))}
@@ -35,11 +37,11 @@ const Form: FC<FormProps> = ({ fields, submitText, submittedText }) => {
             {submitText}
           </Button>
 
-          {submitted && (
+          {/* {submitted && (
             <div className="text-small text-secondary">
              {submittedText}  <code>{JSON.stringify(submitted)}</code>
             </div>
-          )}
+          )} */}
         </HeroForm>
       </div>
     </div>

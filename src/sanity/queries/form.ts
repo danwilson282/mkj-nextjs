@@ -17,6 +17,7 @@ export const formsQuery = groq`
 export const formQuery = groq`
   *[_type == "form" && _id==$id][0]{
     title,
+    slug,
     intro,
     fields[],
     submitText,

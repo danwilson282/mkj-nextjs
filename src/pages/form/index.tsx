@@ -3,12 +3,13 @@ import FormClient from './form';
 import { notFound } from 'next/navigation';
 import { getRelativeUrlFromId } from '@/sanity/helpers/getRelativeUrl';
 import { getForm } from '@/sanity/fetch/getForms';
+import { formActions } from '../../actions/formActions';
 interface FormServerProps {
   id: string;
   isDraft: boolean;
 }
 const FormServer: FC<FormServerProps> = async ({ id, isDraft }) => {
-  const page = await getForm(isDraft, { id });
+  const form = await getForm(isDraft, { id });
   const relativeUrl = await getRelativeUrlFromId(id);
   const breadcrumbsItems = relativeUrl.split('/').map((val) => ({
     href: `/${val}`,
@@ -17,18 +18,20 @@ const FormServer: FC<FormServerProps> = async ({ id, isDraft }) => {
   const breadcrumbs = {
     items: [...breadcrumbsItems],
   };
-  if (page) {
+  
+  if (form) {
     return (
       <FormClient
-        title={page.title}
-        intro={page.intro}
-        fields={page.fields}
-        outro={page.outro}
-        pageMeta={page.pageMeta}
-        layout={page.layout}
+        title={form.title}
+        intro={form.intro}
+        fields={form.fields}
+        outro={form.outro}
+        pageMeta={form.pageMeta}
+        layout={form.layout}
         breadcrumbs={breadcrumbs}
-        submitText={page.submitText}
-        submittedText={page.submittedText}
+        submitText={form.submitText}
+        submittedText={form.submittedText}
+        slug={form.slug.current}
       />
     );
   } else {

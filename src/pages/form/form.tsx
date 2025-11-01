@@ -22,6 +22,8 @@ interface FormClientProps {
   breadcrumbs?: BreadcrumbProps;
   submitText: string;
   submittedText: string;
+  slug: string
+  // submit: (formData: FormData) => Promise<void> | void;
 }
 
 const FormClient: FC<FormClientProps> = ({
@@ -32,7 +34,8 @@ const FormClient: FC<FormClientProps> = ({
   layout,
   breadcrumbs,
   submitText,
-  submittedText
+  submittedText,
+  slug
 }) => {
   return (
     <HeroUIProvider>
@@ -52,7 +55,7 @@ const FormClient: FC<FormClientProps> = ({
           <Style styleProps={layout}>
             <div className="flex flex-col">
                 {intro && <div className="pb-2"><TextBlock value={intro} /></div>}
-              <Form fields={fields} submitText={submitText} submittedText={submittedText}/>
+              <Form fields={fields} submitText={submitText} submittedText={submittedText} slug={slug}/>
                 {outro && <div className="pt-2 pb-2"><TextBlock value={outro} /></div>}
             </div>
           </Style>
