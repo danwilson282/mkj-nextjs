@@ -11,7 +11,7 @@ import { getTopNav } from '@/sanity/fetch/getTopNav';
 import { getServerSession } from 'next-auth/next';
 import type { Session } from 'next-auth';
 import { authOptions } from '@/lib/auth/authProvider';
-import AuthProvider from './context/AuthProvider';
+import AuthProvider from '../context/AuthProvider';
 import { IBM_Plex_Sans, Open_Sans } from 'next/font/google';
 
 export const ibmPlexSans = IBM_Plex_Sans({

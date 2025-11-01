@@ -4,6 +4,7 @@ import { SanityColumnSection } from './sections/ColumnSection';
 import { SanityLayout } from './objects/Layout';
 import { SanityImageSection } from './sections/Image';
 import { SanityIconSection } from './sections/Icon';
+import { SanityCtaSection } from './sections/Cta';
 export type SanitySection = SanitySections & {
   layout?: SanityLayout;
 };
@@ -13,4 +14,5 @@ type SanitySections =
   | SanityTextBlockSection
   | SanityColumnSection
   | SanityImageSection
-  | SanityIconSection;
+  | SanityIconSection
+  | SanityCtaSection;

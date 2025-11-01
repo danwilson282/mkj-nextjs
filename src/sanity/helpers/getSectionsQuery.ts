@@ -1,3 +1,4 @@
+import { ctaFragment } from '../fragments/sections/cta';
 import { heroFragment } from '../fragments/sections/hero';
 import { iconFragment } from '../fragments/sections/icon';
 import { imageBlockFragment } from '../fragments/sections/imageBlock';
@@ -33,6 +34,8 @@ export const getSections = (sectionTypes: string[]): string => {
           return `_type=="columnLayout" => { ${preFetch} }`;
         case 'icon':
           return `_type == "icon" => { ${iconFragment} }`;
+        case 'cta':
+          return `_type == "cta" => { ${ctaFragment} }`;
         default:
           return '';
       }

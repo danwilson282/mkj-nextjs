@@ -1,12 +1,12 @@
 import { groq } from 'next-sanity';
-import { colourFragment } from '../objects/colourFragment';
+import { linkFragment } from '../objects/linkFragment';
 import { layoutFragment } from '../objects/layoutFragment';
-export const iconFragment = groq`
+export const ctaFragment = groq`
         _type,
-        icon,
-        colour {
-            ${colourFragment}
-        },
+        link {
+            ${linkFragment}},
+        colour,
+        variant,
         size,
         layout{
             ${layoutFragment}

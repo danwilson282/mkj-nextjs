@@ -7,5 +7,5 @@ type SectionProps = {
 };
 
 export const IconSectionClient: React.FC<SectionProps> = ({ section }) => {
-  return <Icon icon={section.icon} color={section.color} size={section.size} />;
+  return <Icon icon={section.icon} color={section.colour?.hex ?? "#000000"} size={section.size ?? 20} />;
 };
