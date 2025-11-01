@@ -53,7 +53,7 @@ const FormClient: FC<FormClientProps> = ({
           </div>
 
           <Style styleProps={layout}>
-            <div className="flex flex-col">
+            <div className="flex flex-col min-w-1/2">
                 {intro && <div className="pb-2"><TextBlock value={intro} /></div>}
               <Form fields={fields} submitText={submitText} submittedText={submittedText} slug={slug}/>
                 {outro && <div className="pt-2 pb-2"><TextBlock value={outro} /></div>}
