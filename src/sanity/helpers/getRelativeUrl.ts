@@ -7,7 +7,7 @@ type SlugPart = {
   parent?: string;
   slug: string;
   _id?: string;
-  _type?: 'page' | 'post';
+  _type?: 'page' | 'post' | 'form';
   requiresLogin?: boolean;
   pageMeta?: SanityPageMeta;
 };
