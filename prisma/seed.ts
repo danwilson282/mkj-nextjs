@@ -1,7 +1,7 @@
 // prisma/seed.ts
 import { PrismaClient } from '@prisma/client';
 import { faker } from '@faker-js/faker';
-
+import bcrypt from 'bcrypt';
 const prisma = new PrismaClient();
 
 async function main() {
@@ -18,8 +18,23 @@ async function main() {
       })
     )
   );
+    // Create a test user with verified email (if it doesn't already exist)
+  const testUserEmail = process.env.TEST_USER || 'testuser@example.com';
+  const testPassword = process.env.TEST_PASSWORD || 'pass123';
+  const hashedTestPassword = await bcrypt.hash(testPassword, 10);
+  const verifiedUser = await prisma.user.upsert({
+    where: { email: testUserEmail },
+    update: {}, // Do nothing if exists
+    create: {
+      name: 'Test User',
+      email: testUserEmail,
+      password: hashedTestPassword,
+      emailVerified: new Date(), // mark email as verified
+    },
+  });
 
   console.log(`✅ Seeded ${users.length} users with posts`);
+  console.log('Verified test user:', verifiedUser);
 }
 
 main()
