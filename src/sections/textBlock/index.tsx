@@ -1,4 +1,4 @@
-"use server"
+'use server';
 import { SanityTextBlockSection } from '@/sanity/types/sections/TextBlock';
 import React from 'react';
 import { TextBlockSectionClient } from './TextBlock';

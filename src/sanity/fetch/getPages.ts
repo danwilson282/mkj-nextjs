@@ -49,5 +49,5 @@ export const getPage = async (
     params
   );
 
-  return page
+  return page;
 };

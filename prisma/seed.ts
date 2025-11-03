@@ -18,7 +18,7 @@ async function main() {
       })
     )
   );
-    // Create a test user with verified email (if it doesn't already exist)
+  // Create a test user with verified email (if it doesn't already exist)
   const testUserEmail = process.env.TEST_USER || 'testuser@example.com';
   const testPassword = process.env.TEST_PASSWORD || 'pass123';
   const hashedTestPassword = await bcrypt.hash(testPassword, 10);

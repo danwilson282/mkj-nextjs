@@ -3,6 +3,7 @@ import { pageMiniFragment, pageUrlFragment } from '../fragments/pageFragment';
 import { getSections } from '../helpers/getSectionsQuery';
 import { pageMetaFragment } from '../fragments/objects/pageMetaFragment';
 import { layoutFragment } from '../fragments/objects/layoutFragment';
+import { customDevFragment } from '../fragments/customDevFragment';
 
 export const pageUrlsQuery = groq`*[
   _type == "page"  && hideFromNav != true
@@ -39,7 +40,10 @@ export const pageQuery = (includedSections: string[]) => groq`
                                           ${getSections(includedSections)},
                                         }
                                       }
-                              }
+                              },
+      _type == "reference" => {
+      ${customDevFragment}
+    }
     },
     pageMeta{
       ${pageMetaFragment}

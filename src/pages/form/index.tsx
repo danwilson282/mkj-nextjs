@@ -18,7 +18,7 @@ const FormServer: FC<FormServerProps> = async ({ id, isDraft }) => {
   const breadcrumbs = {
     items: [...breadcrumbsItems],
   };
-  
+
   if (form) {
     return (
       <FormClient

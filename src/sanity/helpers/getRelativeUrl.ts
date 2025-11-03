@@ -119,9 +119,8 @@ export const getPageDataFromRelativeUrl = async (
   };
 };
 
-
 type InternalLink = {
-  _type: "reference";
+  _type: 'reference';
   _ref: string;
 };
 
@@ -131,31 +130,33 @@ type MarkDefBase = {
 };
 
 type InternalLinkMarkDef = MarkDefBase & {
-  _type: "link";
-  linkType: "internal" | "external";
+  _type: 'link';
+  linkType: 'internal' | 'external';
   internalLink?: InternalLink;
   internalUrl?: string;
 };
 
 type SpanChild = {
-  _type: "span";
+  _type: 'span';
   text: string;
   marks?: string[];
 };
 
 export type Block = {
-  _type: "block";
+  _type: 'block';
   children: SpanChild[];
   markDefs?: (InternalLinkMarkDef | MarkDefBase)[];
 };
 
 // 🧠 Type guard for internal link marks
-function isInternalLinkMarkDef(markDef: unknown): markDef is InternalLinkMarkDef {
+function isInternalLinkMarkDef(
+  markDef: unknown
+): markDef is InternalLinkMarkDef {
   return (
-    typeof markDef === "object" &&
+    typeof markDef === 'object' &&
     markDef !== null &&
-    (markDef as InternalLinkMarkDef)._type === "link" &&
-    (markDef as InternalLinkMarkDef).linkType === "internal"
+    (markDef as InternalLinkMarkDef)._type === 'link' &&
+    (markDef as InternalLinkMarkDef).linkType === 'internal'
   );
 }
 
@@ -169,8 +170,14 @@ export async function enrichBlockInternalLinks(
 
       const enrichedMarkDefs = await Promise.all(
         block.markDefs.map(async (markDef) => {
-          if (isInternalLinkMarkDef(markDef) && markDef.internalLink?._ref && !markDef.internalUrl) {
-            const internalUrl = await getRelativeUrlFromId(markDef.internalLink._ref);
+          if (
+            isInternalLinkMarkDef(markDef) &&
+            markDef.internalLink?._ref &&
+            !markDef.internalUrl
+          ) {
+            const internalUrl = await getRelativeUrlFromId(
+              markDef.internalLink._ref
+            );
             return { ...markDef, internalUrl };
           }
 
@@ -184,4 +191,3 @@ export async function enrichBlockInternalLinks(
 
   return { ...section, content: enrichedContent };
 }
-

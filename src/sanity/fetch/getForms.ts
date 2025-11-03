@@ -23,5 +23,5 @@ export const getForm = async (
     params
   );
 
-  return form
+  return form;
 };
