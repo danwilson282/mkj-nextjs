@@ -7,6 +7,8 @@ import Style from '@/components/Style';
 import { ColumnSection } from '@/sections/column';
 import { SanityColumnSection } from '@/sanity/types/sections/ColumnSection';
 import { Section } from '@/sections';
+import { CustomDevSection } from '@/sections/customDev';
+import { SanityCustomDevSection } from '@/sanity/types/CustomDev';
 interface PageServerProps {
   id: string;
   isDraft: boolean;
@@ -21,17 +23,18 @@ const PageServer: FC<PageServerProps> = async ({ id, isDraft }) => {
   const breadcrumbs = {
     items: [...breadcrumbsItems],
   };
-const sectionComponents = () => (
-  page?.sections?.map((section, key) => (
-    
-    <Style key={key} nested styleProps={section.layout}>
-       {section._type === 'columnLayout' && (
-         <ColumnSection section={section as SanityColumnSection} />
-       )}
-       <Section section={section} />
-    </Style>
-  ))
-)
+  const sectionComponents = () =>
+    page?.sections?.map((section, key) => (
+      <Style key={key} nested styleProps={section.layout}>
+        {section._type === 'columnLayout' && (
+          <ColumnSection section={section as SanityColumnSection} />
+        )}
+        {section._type === 'reference' && (
+          <CustomDevSection section={section as SanityCustomDevSection} />
+        )}
+        <Section section={section} />
+      </Style>
+    ));
   if (page) {
     return (
       <PageClient

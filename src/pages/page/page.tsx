@@ -11,7 +11,7 @@ import Style from '@/components/Style';
 import { HeroUIProvider } from '@heroui/react';
 interface PageClientProps {
   title: string;
-  sectionComponents?: JSX.Element[] | undefined
+  sectionComponents?: JSX.Element[] | undefined;
   pageMeta?: SanityPageMeta;
   layout?: SanityLayout;
   breadcrumbs?: BreadcrumbProps;
@@ -39,9 +39,7 @@ const PageClient: FC<PageClientProps> = ({
           </div>
 
           <Style styleProps={layout}>
-            <div>
-              {sectionComponents}
-            </div>
+            <div>{sectionComponents}</div>
           </Style>
         </div>
       </div>

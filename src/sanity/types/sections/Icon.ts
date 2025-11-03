@@ -4,6 +4,5 @@ export type SanityIconSection = {
   _type: string;
   colour?: SanityColour;
   icon: keyof typeof FaIcons;
-  size?: number,
-
+  size?: number;
 };

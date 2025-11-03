@@ -14,15 +14,15 @@ import { SanityFormField } from '@/sanity/types/FormField';
 import Form from '@/components/Form';
 interface FormClientProps {
   title: string;
-  intro?: TextBlockProps['value']
-  fields: SanityFormField[]
-  outro?: TextBlockProps['value']
+  intro?: TextBlockProps['value'];
+  fields: SanityFormField[];
+  outro?: TextBlockProps['value'];
   pageMeta?: SanityPageMeta;
   layout?: SanityLayout;
   breadcrumbs?: BreadcrumbProps;
   submitText: string;
   submittedText: string;
-  slug: string
+  slug: string;
   // submit: (formData: FormData) => Promise<void> | void;
 }
 
@@ -35,7 +35,7 @@ const FormClient: FC<FormClientProps> = ({
   breadcrumbs,
   submitText,
   submittedText,
-  slug
+  slug,
 }) => {
   return (
     <HeroUIProvider>
@@ -54,9 +54,22 @@ const FormClient: FC<FormClientProps> = ({
 
           <Style styleProps={layout}>
             <div className="flex flex-col min-w-1/2">
-                {intro && <div className="pb-2"><TextBlock value={intro} /></div>}
-              <Form fields={fields} submitText={submitText} submittedText={submittedText} slug={slug}/>
-                {outro && <div className="pt-2 pb-2"><TextBlock value={outro} /></div>}
+              {intro && (
+                <div className="pb-2">
+                  <TextBlock value={intro} />
+                </div>
+              )}
+              <Form
+                fields={fields}
+                submitText={submitText}
+                submittedText={submittedText}
+                slug={slug}
+              />
+              {outro && (
+                <div className="pt-2 pb-2">
+                  <TextBlock value={outro} />
+                </div>
+              )}
             </div>
           </Style>
         </div>

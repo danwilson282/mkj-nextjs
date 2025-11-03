@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import { SanityHeroSection } from '@/sanity/types/sections/Hero';
 import { HeroBanner } from '@danwilson282/mkj-component-library';
 type SectionProps = {

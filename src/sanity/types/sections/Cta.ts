@@ -4,7 +4,7 @@ import { SanityLink } from '../objects/Link';
 export type SanityCtaSection = {
   _type: string;
   link: SanityLink;
-  colour: "primary" | "secondary";
-  variant: "filled" | "outlined";
-    size: "sm" | "md" | "lg";
+  colour: 'primary' | 'secondary';
+  variant: 'filled' | 'outlined';
+  size: 'sm' | 'md' | 'lg';
 };
